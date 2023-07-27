@@ -1,7 +1,7 @@
 class Reservation < ApplicationRecord
-  belongs_to :cities
+  belongs_to :city, class_name: "City" 
   belongs_to :user
-  belongs_to :homes
+  belongs_to :home
 
   validates :start_date, presence: true
   validates :end_date, presence: true
