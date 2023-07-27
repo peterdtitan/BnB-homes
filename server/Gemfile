@@ -6,7 +6,7 @@ gem 'rubocop'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'devise'
 gem 'rails', '~> 7.0.6'
-
+gem 'jsonapi-serializer'
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
@@ -74,3 +74,4 @@ group :test do
   gem 'shoulda-matchers'
   gem 'webdrivers'
 end
+gem 'rack-cors'
