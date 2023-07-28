@@ -1,5 +1,3 @@
-# spec/requests/homes_spec.rb
-
 require 'rails_helper'
 
 RSpec.describe "Homes API", type: :request do
@@ -30,7 +28,26 @@ RSpec.describe "Homes API", type: :request do
         expect(json_response[index]["image"]).to eq(home.image)
       end
     end
-  end
 
-  # Add more integration tests for other actions if needed
+    it "returns a single home with JSON response" do
+      # Create a home using the factory
+      home = FactoryBot.create(:home)
+
+      # Make a GET request to the show action of the HomesController
+      get "/api/v1/homes/#{home.id}"
+
+      # Expect a successful response (HTTP status code 200)
+      expect(response).to have_http_status(:ok)
+
+      # Parse the JSON response body
+      json_response = JSON.parse(response.body)
+
+      # Expect the JSON response to have the expected attributes for the home
+      expect(json_response["id"]).to eq(home.id)
+      expect(json_response["name"]).to eq(home.name)
+      expect(json_response["price"]).to eq(home.price)
+      expect(json_response["description"]).to eq(home.description)
+      expect(json_response["image"]).to eq(home.image)
+    end
+  end
 end
