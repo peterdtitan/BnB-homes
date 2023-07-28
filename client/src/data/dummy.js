@@ -36,3 +36,5 @@ const homes = [
         image: 'https://a0.muscache.com/im/pictures/miso/Hosting-704388413373741312/original/2c632059-f454-4cb3-920d-4510e314e31e.jpeg?im_w=720',
     },
 ];
+
+export default homes;

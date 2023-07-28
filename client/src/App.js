@@ -7,9 +7,7 @@ import Home from './components/Home';
 function App() {
   return (
     <Layout>
-      <Routes>
-        <Route path="/" component={Home} />
-      </Routes>
+      <Home />
     </Layout>
   );
 }
