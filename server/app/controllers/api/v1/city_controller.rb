@@ -1,17 +1,20 @@
+# app/controllers/api/v1/city_controller.rb
 class Api::V1::CityController < ApplicationController
   def index
-    @city = City.all
-    render json: @city
+    @cities = City.all
+    render json: @cities
   end
 
   def create 
-    @city = City.create(city_params)
-    if city.save
-     render json: @city, status: 200
+    @city = City.new(city_params)
+    if @city.save
+      render json: @city, status: :created
     else
-      render json: {error: "Error creating city ..."}
+      render json: { error: "Error creating city ..." }, status: :unprocessable_entity
     end
   end
+
+  private
 
   def city_params
     params.require(:city).permit(:name)
