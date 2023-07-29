@@ -11,7 +11,7 @@ class Api::V1::ReservationsController < ApplicationController
 
   def create
     @reservation = Reservation.new(reservation_params)
-    if reservation.save
+    if @reservation.save
       render json: @reservation, status: 200
     else
       render json: {

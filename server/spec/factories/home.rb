@@ -4,6 +4,7 @@ FactoryBot.define do
       price { Faker::Number.within(range: 100..1000) }
       description { Faker::Lorem.paragraph(sentence_count: 2) }
       image { 'example.jpg' }
+
     end
   end
   
