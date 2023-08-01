@@ -1,0 +1,487 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/users/login":
+    post:
+      summary: User Sign In
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '200':
+          description: Logged in successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                    required:
+                    - code
+                    - message
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      full_name:
+                        type: string
+                      email:
+                        type: string
+                      role:
+                        type: string
+                    required:
+                    - id
+                    - full_name
+                    - email
+                    - role
+                required:
+                - status
+                - data
+        '401':
+          description: Couldn't find an active session
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                required:
+                - status
+                - message
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+              - email
+              - password
+  "/users/logout":
+    delete:
+      summary: User Sign Out
+      tags:
+      - Users
+      security:
+      - bearer_auth: []
+      responses:
+        '200':
+          description: Logged out successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                  message:
+                    type: string
+                required:
+                - status
+                - message
+  "/api/v1/city":
+    get:
+      summary: Retrieve all cities
+      tags:
+      - City
+      responses:
+        '200':
+          description: Cities found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                  required:
+                  - id
+                  - name
+    post:
+      summary: Create a city
+      tags:
+      - City
+      parameters: []
+      responses:
+        '200':
+          description: Error creating Cities
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  error:
+                    type: string
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+              - name
+  "/api/v1/homes":
+    get:
+      summary: Retrieve all homes
+      tags:
+      - Home
+      responses:
+        '200':
+          description: Homes found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    price:
+                      type: number
+                    image:
+                      type: string
+                    description:
+                      type: string
+                  required:
+                  - id
+                  - name
+                  - price
+                  - image
+                  - description
+    post:
+      summary: Create a homes
+      tags:
+      - Home
+      parameters: []
+      responses:
+        '200':
+          description: Error creating home
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  price:
+                    type: number
+                  image:
+                    type: string
+                  description:
+                    type: string
+                  error:
+                    type: string
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                price:
+                  type: number
+                image:
+                  type: string
+                description:
+                  type: string
+              required:
+              - name
+              - price
+              - image
+              - description
+  "/api/v1/homes/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: Retrieve a home
+      tags:
+      - Home
+      responses:
+        '200':
+          description: Home found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  price:
+                    type: number
+                  image:
+                    type: string
+                  description:
+                    type: string
+                required:
+                - id
+                - name
+                - price
+                - image
+                - description
+        '404':
+          description: home not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+    delete:
+      summary: Delete a homes
+      tags:
+      - Home
+      responses:
+        '204':
+          description: Homes deleted
+        '404':
+          description: homes not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+  "/api/v1/reservations":
+    get:
+      summary: Retrieve all reservations
+      tags:
+      - Reservations
+      responses:
+        '200':
+          description: Reservations found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                    city_id:
+                      type: integer
+                    user_id:
+                      type: integer
+                    home_id:
+                      type: integer
+                    start_date:
+                      type: string
+                      format: date-time
+                    end_date:
+                      type: string
+                      format: date-time
+                  required:
+                  - id
+                  - city_id
+                  - user_id
+                  - home_id
+                  - start_date
+                  - end_date
+    post:
+      summary: Create a reservation
+      tags:
+      - Reservations
+      parameters: []
+      responses:
+        '200':
+          description: Error creating reservation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  city_id:
+                    type: integer
+                  user_id:
+                    type: integer
+                  home_id:
+                    type: integer
+                  start_date:
+                    type: string
+                    format: date-time
+                  end_date:
+                    type: string
+                    format: date-time
+                  error:
+                    type: string
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                city_id:
+                  type: integer
+                user_id:
+                  type: integer
+                home_id:
+                  type: integer
+                start_date:
+                  type: string
+                  format: date-time
+                end_date:
+                  type: string
+                  format: date-time
+              required:
+              - city_id
+              - user_id
+              - home_id
+              - start_date
+              - end_date
+  "/api/v1/reservations/{id}":
+    get:
+      summary: Retrieve a reservation
+      tags:
+      - Reservations
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Reservation found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  city_id:
+                    type: integer
+                  user_id:
+                    type: integer
+                  home_id:
+                    type: integer
+                  start_date:
+                    type: string
+                    format: date-time
+                  end_date:
+                    type: string
+                    format: date-time
+                required:
+                - id
+                - city_id
+                - user_id
+                - home_id
+                - start_date
+                - end_date
+        '404':
+          description: Reservation not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+    delete:
+      summary: Delete a reservation
+      tags:
+      - Reservations
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: Reservation deleted
+        '404':
+          description: Reservation not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+  "/api/v1/users":
+    get:
+      summary: Retrieve all users
+      tags:
+      - Users
+      responses:
+        '200':
+          description: Users found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                    full_name:
+                      type: string
+                    email:
+                      type: string
+                    role:
+                      type: string
+                  required:
+                  - id
+                  - full_name
+                  - email
+                  - role
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
