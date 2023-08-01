@@ -11,7 +11,7 @@ class Api::V1::HomesController < ApplicationController
 
   def create
     @home = Home.new(home_params)
-    if home.save
+    if @home.save
       render json: @home, status: 200
     else
       render json: {
