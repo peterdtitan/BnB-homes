@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addHome } from "../redux/homesSlice";
+import { Card, Button } from "@nextui-org/react";
 
 const AddHome = () => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    address: "",
+    name: "",
     price: "",
     image: "",
     description: "",
@@ -22,11 +23,15 @@ const AddHome = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Dispatch the addHome action with the form data
-      await dispatch(addHome(formData));
+      // Wrap the form data under the "home" key
+      const homeData = { home: formData };
+
+      // Dispatch the addHome action with the wrapped form data
+      await dispatch(addHome(homeData));
+
       // Clear the form after successfully adding the home
       setFormData({
-        address: "",
+        name: "",
         price: "",
         image: "",
         description: "",
@@ -38,50 +43,84 @@ const AddHome = () => {
   };
 
   return (
-    <div>
-      <h2>Add a New Home</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="address">Address:</label>
-          <input
-            type="text"
-            id="address"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="price">Price:</label>
-          <input
-            type="number"
-            id="price"
-            name="price"
-            value={formData.price}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="image">Image URL:</label>
-          <input
-            type="text"
-            id="image"
-            name="image"
-            value={formData.image}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="description">Description:</label>
-          <textarea
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit">Add Home</button>
-      </form>
+    <div className="w-full h-screen flex flex-col items-center justify-evenly px-10 -mt-10">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold tracking-widest">ADD A NEW HOME</h1>
+        <p className="italic font-thin text-md mt-2">Welcome to BnB Homes.</p>
+      </div>
+      <div className="max-w-[85%] bg-white py-4 px-4 shadow-md rounded-md">
+        <form onSubmit={handleSubmit}>
+          <div className="my-4">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Name:
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+          <div className="my-4">
+            <label
+              htmlFor="price"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Price:
+            </label>
+            <input
+              type="number"
+              id="price"
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
+              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+          <div className="my-4">
+            <label
+              htmlFor="image"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Image URL:
+            </label>
+            <input
+              type="text"
+              id="image"
+              name="image"
+              value={formData.image}
+              onChange={handleChange}
+              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+          <div className="my-4">
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Description:
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+            />
+          </div>
+          <button
+            type="submit"
+            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Add Home
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
