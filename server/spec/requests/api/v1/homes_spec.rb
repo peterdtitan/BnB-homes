@@ -1,53 +1,215 @@
-require 'rails_helper'
+require 'swagger_helper'
 
-RSpec.describe "Homes API", type: :request do
-  describe "GET /homes" do
-    it "returns a list of homes with JSON response" do
-      # Create some homes using the factory
-      homes = FactoryBot.create_list(:home, 5)
+RSpec.describe Api::V1::HomesController, type: :request do
+  path '/api/v1/homes' do
+    get 'Retrieve all homes' do
+      tags 'Home'
+      produces 'application/json'
+      response '200', 'Homes found' do
+        schema type: :array,
+               items: {
+                 properties: {
+                   id: { type: :integer },
+                   name: { type: :string },
+                   price: { type: :number },
+                   image: { type: :string },
+                   description: { type: :string },
+                 },
+                 required: %w[id name price image description]
+               }
 
-      # Make a GET request to the index action of the HomesController
-      get "/api/v1/homes"
+        run_test! do
+          # Create some sample services for testing
+          Homes.create!(name: 'Homes 1', price: 10.0, image: 'image1.jpg', details: 'description 1', duration: 60,
+                          rating: 4.5)
+          Homes.create!(name: 'Homes 2', price: 15.0, image: 'image2.jpg', details: 'description 2', duration: 90,
+                          rating: 3.8)
 
-      # Expect a successful response (HTTP status code 200)
-      expect(response).to have_http_status(:ok)
+          # Make a request to retrieve all services
+          get '/api/v1/homes'
 
-      # Parse the JSON response body
-      json_response = JSON.parse(response.body)
+          # Assert the response status code
+          expect(response).to have_http_status(:ok)
 
-      # Expect the JSON response to be an array of homes
-      expect(json_response).to be_an(Array)
-      expect(json_response.length).to eq(5)
-
-      # Expect each item in the JSON response to have the expected attributes
-      homes.each_with_index do |home, index|
-        expect(json_response[index]["id"]).to eq(home.id)
-        expect(json_response[index]["name"]).to eq(home.name)
-        expect(json_response[index]["price"]).to eq(home.price)
-        expect(json_response[index]["description"]).to eq(home.description)
-        expect(json_response[index]["image"]).to eq(home.image)
+          # Assert the response body against the defined schema
+          homes = JSON.parse(response.body)
+          expect(homes).to be_an(Array)
+          expect(homes.length).to eq(2)
+          expect(homes[0]).to include('id', 'name', 'price', 'image', 'description')
+        end
       end
     end
 
-    it "returns a single home with JSON response" do
-      # Create a home using the factory
-      home = FactoryBot.create(:home)
+    post 'Create a homes' do
+      tags 'Home'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :home, in: :body, schema: {
+        type: :object,
+        properties: {
+          name: { type: :string },
+          price: { type: :number },
+          image: { type: :string },
+          description: { type: :string }
+        },
+        required: %w[name price image description]
+      }
 
-      # Make a GET request to the show action of the HomesController
-      get "/api/v1/homes/#{home.id}"
+      response '200', 'Homes created' do
+        schema type: :object,
+               properties: {
+                 id: { type: :integer },
+                 name: { type: :string },
+                 price: { type: :number },
+                 image: { type: :string },
+                 description: { type: :string }
+               },
+               required: %w[id name price image description]
 
-      # Expect a successful response (HTTP status code 200)
-      expect(response).to have_http_status(:ok)
+        let(:home) do
+          {
+            name: 'New Home',
+            price: 20.0,
+            image: 'new_image.jpg',
+            details: 'New Home description',
+          }
+        end
 
-      # Parse the JSON response body
-      json_response = JSON.parse(response.body)
+        run_test! do
+          # Make a request to create a service
+          post '/api/v1/Homes', params: { home: }
 
-      # Expect the JSON response to have the expected attributes for the home
-      expect(json_response["id"]).to eq(home.id)
-      expect(json_response["name"]).to eq(home.name)
-      expect(json_response["price"]).to eq(home.price)
-      expect(json_response["description"]).to eq(home.description)
-      expect(json_response["image"]).to eq(home.image)
+          # Assert the response status code
+          expect(response).to have_http_status(:ok)
+
+          # Assert the response body against the defined schema
+          created_home = JSON.parse(response.body)
+          expect(created_home).to include('id', 'name', 'price', 'image', 'description')
+        end
+      end
+
+      response '200', 'Error creating home' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: ['error']
+
+        let(:home) { { name: 'Invalid Home', price: 'invalid' } }
+
+        run_test! do
+          # Make a request to create a service with invalid data
+          post '/api/v1/homes', params: { home: }
+
+          # Assert the response status code
+          expect(response).to have_http_status(:ok)
+
+          # Assert the response body against the defined schema
+          error_response = JSON.parse(response.body)
+          expect(error_response).to include('error')
+        end
+      end
+    end
+  end
+
+  path '/api/v1/homes/{id}' do
+    parameter name: :id, in: :path, type: :integer, required: true
+
+    get 'Retrieve a home' do
+      tags 'Home'
+      produces 'application/json'
+      response '200', 'Home found' do
+        schema type: :object,
+               properties: {
+                 id: { type: :integer },
+                 name: { type: :string },
+                 price: { type: :number },
+                 image: { type: :string },
+                 description: { type: :string }
+               },
+               required: %w[id name price image description]
+
+        let(:id) do
+          Home.create(name: 'Home 1', price: 10.0, image: 'image1.jpg', description: 'description 1').id
+        end
+
+        run_test! do
+          # Make a request to retrieve a service
+          get "/api/v1/homes/#{id}"
+
+          # Assert the response status code
+          expect(response).to have_http_status(:ok)
+
+          # Assert the response body against the defined schema
+          home = JSON.parse(response.body)
+          expect(home).to include('id', 'name', 'price', 'image', 'description')
+        end
+      end
+
+      response '404', 'home not found' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: ['error']
+
+        let(:id) { 999 }
+
+        run_test! do
+          # Make a request to retrieve a non-existing service
+          get "/api/v1/homes/#{id}"
+
+          # Assert the response status code
+          expect(response).to have_http_status(:not_found)
+
+          # Assert the response body against the defined schema
+          error_response = JSON.parse(response.body)
+          expect(error_response).to include('error')
+        end
+      end
+    end
+
+    delete 'Delete a homes' do
+      tags 'Home'
+      produces 'application/json'
+      response '204', 'Homes deleted' do
+        let(:id) do
+          Home.create(name: 'Home 1', price: 10.0, image: 'image1.jpg', description: 'description 1').id
+        end
+
+        run_test! do
+          # Make a request to delete a service
+          delete "/api/v1/homes/#{id}"
+
+          # Assert the response status code
+          expect(response).to have_http_status(:no_content)
+
+          # Assert that the service is deleted
+          expect(Home.find_by(id:)).to be_nil
+        end
+      end
+
+      response '404', 'homes not found' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: ['error']
+
+        let(:id) { 999 }
+
+        run_test! do
+          # Make a request to delete a non-existing service
+          delete "/api/v1/homes/#{id}"
+
+          # Assert the response status code
+          expect(response).to have_http_status(:not_found)
+
+          # Assert the response body against the defined schema
+          error_response = JSON.parse(response.body)
+          expect(error_response).to include('error')
+        end
+      end
     end
   end
 end
