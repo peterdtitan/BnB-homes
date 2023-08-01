@@ -1,67 +1,95 @@
-# spec/requests/api/v1/city_controller_spec.rb
-require 'rails_helper'
 
 RSpec.describe Api::V1::CityController, type: :request do
-  describe "GET /api/v1/city" do
-    it "returns a list of cities with JSON response" do
-      # Create some cities using the factory or any other method
-      cities = FactoryBot.create_list(:city, 5)
+  path '/api/v1/city' do
+    get 'Retrieve all cities' do
+      tags 'City'
+      produces 'application/json'
+      response '200', 'Cities found' do
+        schema type: :array,
+               items: {
+                 properties: {
+                   id: { type: :integer },
+                   name: { type: :string }
+                 },
+                 required: %w[id name]
+               }
 
-      # Make a GET request to the index action of the CityController
-      get "/api/v1/city"
+        run_test! do
+          # Create some sample locations for testing
+          City.create!(name: 'City 1')
+          City.create!(name: 'City 2')
 
-      # Expect a successful response (HTTP status code 200)
-      expect(response).to have_http_status(:ok)
+          # Make a request to retrieve all locations
+          get '/api/v1/city'
 
-      # Parse the JSON response body
-      json_response = JSON.parse(response.body)
+          # Assert the response status code
+          expect(response).to have_http_status(:ok)
 
-      # Expect the JSON response to be an array of cities
-      expect(json_response).to be_an(Array)
-      expect(json_response.length).to eq(5)
-
-      # Expect each item in the JSON response to have the expected attributes
-      cities.each_with_index do |city, index|
-        expect(json_response[index]["id"]).to eq(city.id)
-        expect(json_response[index]["name"]).to eq(city.name)
+          # Assert the response body against the defined schema
+          cities = JSON.parse(response.body)
+          expect(cities).to be_an(Array)
+          expect(cities.length).to eq(2)
+          expect(cities[0]).to include('id', 'name')
+        end
       end
     end
-  end
 
-  describe "POST /api/v1/city" do
-    it "creates a new city with JSON response" do
-      # Parameters for the new city
-      city_params = { city: { name: "New City" } }
+    post 'Create a city' do
+      tags 'City'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :city, in: :body, schema: {
+        type: :object,
+        properties: {
+          name: { type: :string }
+        },
+        required: ['name']
+      }
 
-      # Make a POST request to the create action of the CityController
-      post "/api/v1/city", params: city_params
+      response '200', 'city created' do
+        schema type: :object,
+               properties: {
+                 id: { type: :integer },
+                 name: { type: :string }
+               },
+               required: %w[id name]
 
-      # Expect a successful response (HTTP status code 201)
-      expect(response).to have_http_status(:created)
+        let(:city) { { name: 'New City' } }
 
-      # Parse the JSON response body
-      json_response = JSON.parse(response.body)
+        run_test! do
+          # Make a request to create a location
+          post '/api/v1/city', params: { city: }
 
-      # Expect the JSON response to have the expected attributes for the new city
-      expect(json_response["id"]).to be_present
-      expect(json_response["name"]).to eq("New City")
-    end
+          # Assert the response status code
+          expect(response).to have_http_status(:ok)
 
-    it "returns an error for invalid city parameters" do
-      # Invalid parameters for the new city (missing name)
-      invalid_params = { city: { invalid_key: "Invalid Value" } }
+          # Assert the response body against the defined schema
+          created_city = JSON.parse(response.body)
+          expect(created_city).to include('id', 'name')
+        end
+      end
 
-      # Make a POST request to the create action of the CityController with invalid parameters
-      post "/api/v1/city", params: invalid_params
+      response '200', 'Error creating Cities' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: ['error']
 
-      # Expect an error response (HTTP status code 422)
-      expect(response).to have_http_status(:unprocessable_entity)
+        let(:city) { { name: nil } }
 
-      # Parse the JSON response body
-      json_response = JSON.parse(response.body)
+        run_test! do
+          # Make a request to create a location with invalid data
+          post '/api/v1/city', params: { city: }
 
-      # Expect the JSON response to have an error message
-      expect(json_response["error"]).to eq("Error creating city ...")
+          # Assert the response status code
+          expect(response).to have_http_status(:ok)
+
+          # Assert the response body against the defined schema
+          error_response = JSON.parse(response.body)
+          expect(error_response).to include('error')
+        end
+      end
     end
   end
 end

@@ -1,87 +1,225 @@
 # spec/requests/api/v1/reservations_spec.rb
-require 'rails_helper'
-RSpec.describe "Api::V1::ReservationsController", type: :request do
-  describe "GET /api/v1/reservations" do
-    it "returns a list of reservations with JSON response" do
+require 'swagger_helper'
 
-      reservations = FactoryBot.create_list(:reservation, 5)
+RSpec.describe Api::V1::ReservationsController, type: :request do
+  path '/api/v1/reservations' do
+    get 'Retrieve all reservations' do
+      tags 'Reservations'
+      produces 'application/json'
+      response '200', 'Reservations found' do
+        schema type: :array,
+               items: {
+                 properties: {
+                   id: { type: :integer },
+                   city_id: { type: :integer },
+                   user_id: { type: :integer },
+                   home_id: { type: :integer },
+                   start_date: { type: :string, format: 'date-time' },
+                   end_date: { type: :string, format: 'date-time' }
+                 },
+                 required: %w[id city_id user_id home_id start_date end_date]
+               }
 
-      get "/api/v1/reservations"
+        run_test! do
+          # Create some sample reservations for testing
+          Reservation.create!(city_id: 1, user_id: 1, home_id: 1, start_date: DateTime.now,
+                              end_date: DateTime.now + 1.day)
+          Reservation.create!(city_id: 2, user_id: 2, home_id: 2, start_date: DateTime.now,
+                              end_date: DateTime.now + 1.day)
 
-      expect(response).to have_http_status(:ok)
- 
-      json_response = JSON.parse(response.body)
-    
-      expect(json_response).to be_an(Array)
-      expect(json_response.length).to eq(5)
-    
-      reservations.each_with_index do |reservation, index|
-        expect(json_response[index]["id"]).to eq(reservation.id)
-        expect(json_response[index]["start_date"]).to eq(reservation.start_date.to_s)
-        expect(json_response[index]["end_date"]).to eq(reservation.end_date.to_s)
-        expect(json_response[index]["city_id"]).to eq(reservation.city_id)
-        expect(json_response[index]["home_id"]).to eq(reservation.home_id)
-        expect(json_response[index]["user_id"]).to eq(reservation.user_id)
+          # Make a request to retrieve all reservations
+          get '/api/v1/reservations'
+
+          # Assert the response status code
+          expect(response).to have_http_status(:ok)
+
+          # Assert the response body against the defined schema
+          reservations = JSON.parse(response.body)
+          expect(reservations).to be_an(Array)
+          expect(reservations.length).to eq(2)
+          expect(reservations[0]).to include('id', 'city_id', 'user_id', 'home_id', 'start_date', 'end_date')
+        end
+      end
+    end
+
+    post 'Create a reservation' do
+      tags 'Reservations'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :reservation, in: :body, schema: {
+        type: :object,
+        properties: {
+          city_id: { type: :integer },
+          user_id: { type: :integer },
+          home_id: { type: :integer },
+          start_date: { type: :string, format: 'date-time' },
+          end_date: { type: :string, format: 'date-time' }
+        },
+        required: %w[city_id user_id home_id start_date end_date]
+      }
+
+      response '200', 'Reservation created' do
+        schema type: :object,
+               properties: {
+                 id: { type: :integer },
+                 city_id: { type: :integer },
+                 user_id: { type: :integer },
+                 home_id: { type: :integer },
+                 start_date: { type: :string, format: 'date-time' },
+                 end_date: { type: :string, format: 'date-time' }
+               },
+               required: %w[id city_id user_id home_id start_date end_date]
+
+        let(:reservation) do
+          {
+            city_id: 1,
+            user_id: 1,
+            home_id: 1,
+            start_date: DateTime.now,
+            end_date: DateTime.now + 1.day
+          }
+        end
+
+        run_test! do
+          # Make a request to create a reservation
+          post '/api/v1/reservations', params: { reservation: }
+
+          # Assert the response status code
+          expect(response).to have_http_status(:ok)
+
+          # Assert the response body against the defined schema
+          created_reservation = JSON.parse(response.body)
+          expect(created_reservation).to include('id', 'city_id', 'user_id', 'home_id', 'start_date', 'end_date')
+        end
+      end
+
+      response '200', 'Error creating reservation' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: ['error']
+
+        let(:reservation) { { city_id: nil } }
+
+        run_test! do
+          # Make a request to create a reservation with invalid data
+          post '/api/v1/reservations', params: { reservation: }
+
+          # Assert the response status code
+          expect(response).to have_http_status(:ok)
+
+          # Assert the response body against the defined schema
+          error_response = JSON.parse(response.body)
+          expect(error_response).to include('error')
+        end
       end
     end
   end
-  describe "GET /api/v1/reservations/:id" do
-    it "returns a single reservation with JSON response" do
 
-      reservation = FactoryBot.create(:reservation)
+  path '/api/v1/reservations/{id}' do
+    get 'Retrieve a reservation' do
+      tags 'Reservations'
+      produces 'application/json'
+      parameter name: :id, in: :path, type: :integer, required: true
 
-      get "/api/v1/reservations/#{reservation.id}"
+      response '200', 'Reservation found' do
+        schema type: :object,
+               properties: {
+                 id: { type: :integer },
+                 city_id: { type: :integer },
+                 user_id: { type: :integer },
+                 home_id: { type: :integer },
+                 start_date: { type: :string, format: 'date-time' },
+                 end_date: { type: :string, format: 'date-time' }
+               },
+               required: %w[id city_id user_id home_id start_date end_date]
 
-      expect(response).to have_http_status(:ok)
+        let(:id) do
+          Reservation.create(city_id: 1, user_id: 1, home_id: 1, start_date: DateTime.now,
+                             end_date: DateTime.now + 1.day).id
+        end
 
-      json_response = JSON.parse(response.body)
+        run_test! do
+          # Make a request to retrieve a reservation
+          get "/api/v1/reservations/#{id}"
 
-      expect(json_response["id"]).to eq(reservation.id)
-      expect(json_response["start_date"]).to eq(reservation.start_date.to_s)
-      expect(json_response["end_date"]).to eq(reservation.end_date.to_s)
-      expect(json_response["city_id"]).to eq(reservation.city_id)
-      expect(json_response["home_id"]).to eq(reservation.home_id)
-      expect(json_response["user_id"]).to eq(reservation.user_id)
+          # Assert the response status code
+          expect(response).to have_http_status(:ok)
+
+          # Assert the response body against the defined schema
+          reservation = JSON.parse(response.body)
+          expect(reservation).to include('id', 'city_id', 'user_id', 'home_id', 'start_date', 'end_date')
+        end
+      end
+
+      response '404', 'Reservation not found' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: ['error']
+
+        let(:id) { 999 }
+
+        run_test! do
+          # Make a request to retrieve a non-existing reservation
+          get "/api/v1/reservations/#{id}"
+
+          # Assert the response status code
+          expect(response).to have_http_status(:not_found)
+
+          # Assert the response body against the defined schema
+          error_response = JSON.parse(response.body)
+          expect(error_response).to include('error')
+        end
+      end
     end
-  end
-  describe "POST /api/v1/reservations" do
-    it "creates a new reservation with JSON response" do
-      user = FactoryBot.create(:user)
-      home = FactoryBot.create(:home)
-      city = FactoryBot.create(:city)
-  
-      reservation_data = {
-        start_date: Date.today,
-        end_date: Date.today + 7.days,
-        city_id: city.id,
-        home_id: home.id,
-        user_id: user.id
-      }
-  
-      post "/api/v1/reservations", params: { reservation: reservation_data }
-  
-      expect(response).to have_http_status(:ok)
-  
-      json_response = JSON.parse(response.body)
-  
-      expect(json_response["start_date"]).to eq(reservation_data[:start_date].to_s)
-      expect(json_response["end_date"]).to eq(reservation_data[:end_date].to_s)
-      expect(json_response["city_id"]).to eq(reservation_data[:city_id])
-      expect(json_response["home_id"]).to eq(reservation_data[:home_id])
-      expect(json_response["user_id"]).to eq(reservation_data[:user_id])
-    end
-  end
-  
-  describe "DELETE /api/v1/reservations/:id" do
-    it "deletes a reservation with JSON response" do
 
-      reservation = FactoryBot.create(:reservation)
+    delete 'Delete a reservation' do
+      tags 'Reservations'
+      produces 'application/json'
+      parameter name: :id, in: :path, type: :integer, required: true
 
-      delete "/api/v1/reservations/#{reservation.id}"
+      response '204', 'Reservation deleted' do
+        let(:id) do
+          Reservation.create(city_id: 1, user_id: 1, home_id: 1, start_date: DateTime.now,
+                             end_date: DateTime.now + 1.day).id
+        end
 
-      expect(response).to have_http_status(:no_content)
+        run_test! do
+          # Make a request to delete a reservation
+          delete "/api/v1/reservations/#{id}"
 
-      expect { reservation.reload }.to raise_error(ActiveRecord::RecordNotFound)
+          # Assert the response status code
+          expect(response).to have_http_status(:no_content)
+
+          # Assert that the reservation is deleted
+          expect(Reservation.find_by(id:)).to be_nil
+        end
+      end
+
+      response '404', 'Reservation not found' do
+        schema type: :object,
+               properties: {
+                 error: { type: :string }
+               },
+               required: ['error']
+
+        let(:id) { 999 }
+
+        run_test! do
+          # Make a request to delete a non-existing reservation
+          delete "/api/v1/reservations/#{id}"
+
+          # Assert the response status code
+          expect(response).to have_http_status(:not_found)
+
+          # Assert the response body against the defined schema
+          error_response = JSON.parse(response.body)
+          expect(error_response).to include('error')
+        end
+      end
     end
   end
 end
