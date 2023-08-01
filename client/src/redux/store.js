@@ -1,9 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit';
-
+// store.js
+import { configureStore } from "@reduxjs/toolkit";
+import homesReducer from "./homesSlice";
 
 const store = configureStore({
   reducer: {
-// Add reducers here later on when rails api is ready
+    homes: homesReducer,
   },
 });
 
