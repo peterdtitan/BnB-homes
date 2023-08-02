@@ -1,9 +1,18 @@
-import React from "react";
-import homes from "../data/dummy";
+import React, { useEffect } from "react";
+// import homes from "../data/dummy";
 import { Card, Col, Row, Button, Text } from "@nextui-org/react";
-import { fetchHomes } from "../redux/homesSlice";
+import { fetchAllHomes } from "../redux/homesSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Home() {
+  const dispatch = useDispatch();
+  const homes = useSelector((state) => state.homes.homes);
+
+  useEffect(() => {
+    // Fetch all homes when the component mounts
+    dispatch(fetchAllHomes());
+  }, [dispatch]);
+
   return (
     <div className="w-full h-screen flex flex-col items-center justify-evenly px-10 -mt-10">
       <div className="text-center">

@@ -12,10 +12,10 @@ const RemoveHome = () => {
     dispatch(fetchAllHomes());
   }, [dispatch]);
 
-  const handleDelete = async (homeId) => {
+  const handleDelete = (homeId) => {
     try {
       // Dispatch the deleteHome action with the homeId
-      await dispatch(deleteHome(homeId));
+      dispatch(deleteHome(homeId));
     } catch (error) {
       console.error("Error deleting home:", error);
       // Handle error if necessary
