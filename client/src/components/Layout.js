@@ -198,7 +198,7 @@ export default function Layout({ children }) {
         </div>
       </aside>
 
-      <div className="p-4 sm:ml-64">{children}</div>
+    <div className="p-4 sm:ml-64">{children}</div>
     </div>
   );
 }
