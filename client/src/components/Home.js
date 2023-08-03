@@ -1,10 +1,31 @@
-import React, { useEffect } from "react";
-// import homes from "../data/dummy";
+import React, { useEffect, useRef } from "react";
+import homes from "../data/dummy";
 import { Card, Col, Row, Button, Text } from "@nextui-org/react";
 import { fetchAllHomes } from "../redux/homesSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Home() {
+
+  const scrollContainerRef = useRef(null);
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: -200,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: 200, 
+        behavior: "smooth",
+      });
+    }
+  };
+
   const dispatch = useDispatch();
   const homes = useSelector((state) => state.homes.homes);
 
@@ -19,7 +40,14 @@ export default function Home() {
         <h1 className="text-4xl font-bold tracking-widest">LATEST HOMES</h1>
         <p className="italic font-thin text-md mt-2">Welcome to BnB Homes.</p>
       </div>
-      <div className="flex max-w-[85%] bg-white overflow-x-auto scrollbar-thin scrollbar-thumb-primary scrollbar-track-primary">
+      <div className="flex justify-evenly items-center px-4">
+        <button
+            className="bg-gray-200 p-2 rounded-l focus:outline-none"
+            onClick={scrollLeft}
+          >
+            {"<"}
+        </button>
+        <div ref={scrollContainerRef} className="flex max-w-[60%] bg-white overflow-x-auto scrollbar-thin scrollbar-thumb-primary scrollbar-track-primary">
         {homes.map((home) => (
           <div key={home.id} className="min-w-80 flex-shrink-0 mx-2">
             <Card css={{ w: "100%", h: "400px" }}>
@@ -88,6 +116,13 @@ export default function Home() {
             </Card>
           </div>
         ))}
+        </div>
+        <button
+            className="bg-gray-200 p-2 rounded-r focus:outline-none"
+            onClick={scrollRight}
+          >
+            {">"}
+        </button>
       </div>
     </div>
   );
