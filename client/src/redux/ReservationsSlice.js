@@ -10,7 +10,7 @@ const initialState = {
 
 // Async Thunk for fetching all homes
 export const fetchAllReservations = createAsyncThunk(
-  "homes/fetchAllHomes",
+  "homes/fetchAllReservations",
   async () => {
     const response = await axios.get(
       "http://127.0.0.1:3000/api/v1/reservations"
@@ -21,7 +21,7 @@ export const fetchAllReservations = createAsyncThunk(
 
 // Async Thunk for adding a new reservations
 export const addReservations = createAsyncThunk(
-  "homes/addHome",
+  "homes/addReservations",
   async (reservationsData) => {
     const response = await axios.post(
       "http://127.0.0.1:3000/api/v1/reservations",
@@ -33,7 +33,7 @@ export const addReservations = createAsyncThunk(
 
 // Async Thunk for deleting a home
 export const deleteReservations = createAsyncThunk(
-  "homes/deleteHome",
+  "homes/deleteReservations",
   async (reservationsId) => {
     await axios.delete(`http://127.0.0.1:3000/api/v1/homes/${reservationsId}`);
     return reservationsId;
