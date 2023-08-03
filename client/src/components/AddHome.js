@@ -46,9 +46,9 @@ const AddHome = () => {
     <div className="w-full h-screen flex flex-col items-center justify-evenly px-10 -mt-10">
       <div className="text-center">
         <h1 className="text-4xl font-bold tracking-widest">ADD A NEW HOME</h1>
-        <p className="italic font-thin text-md mt-2">Welcome to BnB Homes.</p>
+        <p className="italic font-thin text-md mt-2">We are glad to have you list with us!</p>
       </div>
-      <div className="max-w-[85%] bg-white py-4 px-4 shadow-md rounded-md">
+      <div className="w-[80%] bg-white py-4 px-4 shadow-md rounded-md border-[0.5px]">
         <form onSubmit={handleSubmit}>
           <div className="my-4">
             <label
@@ -63,7 +63,7 @@ const AddHome = () => {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+              className="mt-1 p-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-[0.5px] border-gray-300 rounded-md"
             />
           </div>
           <div className="my-4">
@@ -79,7 +79,7 @@ const AddHome = () => {
               name="price"
               value={formData.price}
               onChange={handleChange}
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+              className="mt-1 focus:ring-indigo-500 border-[0.5px] p-2 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
             />
           </div>
           <div className="my-4">
@@ -95,7 +95,7 @@ const AddHome = () => {
               name="image"
               value={formData.image}
               onChange={handleChange}
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+              className="mt-1 focus:ring-indigo-500 border-[0.5px] p-2 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
             />
           </div>
           <div className="my-4">
@@ -110,7 +110,7 @@ const AddHome = () => {
               name="description"
               value={formData.description}
               onChange={handleChange}
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+              className="mt-1 focus:ring-indigo-500 border-[0.5px] p-2 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
             />
           </div>
           <button
