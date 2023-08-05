@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addHome } from "../redux/homesSlice";
-import { Card, Button } from "@nextui-org/react";
 
 const AddHome = () => {
   const dispatch = useDispatch();

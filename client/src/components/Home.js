@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 // import SingleHome from "./SingleHome";
+import { Spinner } from "@nextui-org/react";
 
 export default function Home() {
   const scrollContainerRef = useRef(null);
@@ -29,8 +30,7 @@ export default function Home() {
   };
 
   const dispatch = useDispatch();
-  const homes = useSelector((state) => state.homes.homes);
-  const navigate = useNavigate();
+  //const homes = useSelector((state) => state.homes.homes);
 
   useEffect(() => {
     // Fetch all homes when the component mounts
@@ -61,82 +61,89 @@ export default function Home() {
           ref={scrollContainerRef}
           className="flex gap-4 bg-white overflow-x-auto scrollbar-thin scrollbar-thumb-primary scrollbar-track-primary"
         >
-          {homes.map((home) => (
-            <div
+            {homes ? (
+            homes.map((home) => (
+                <div
               key={home.id}
               className="min-w-80 h-[500px] flex items-center flex-shrink-0 mx-2"
               onClick={() => handleCardClick(home.id)}
             >
-              <Card
+                  <Card
                 css={{ w: "100%", h: "300px" }}
                 className="transform hover:scale-110 transition-all duration-300"
                 key={home.id}
               >
-                <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
-                  <Col>
-                    <Text
-                      size={12}
-                      weight="bold"
-                      transform="uppercase"
-                      color="#ffffff"
+                    <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
+                      <Col>
+                        <Text
+                          size={12}
+                          weight="bold"
+                          transform="uppercase"
+                          color="#ffffff"
+                        >
+                          New
+                        </Text>
+                        <Text h3 color="black">
+                          {home.title}
+                        </Text>
+                      </Col>
+                    </Card.Header>
+                    <Card.Body css={{ p: 0 }}>
+                      <div className="w-[300px] h-[300px]">
+                        <Card.Image
+                          src={home.image}
+                          width="100%"
+                          height="100%"
+                          objectFit="cover"
+                          alt="Card example background"
+                        />
+                      </div>
+                    </Card.Body>
+                    <Card.Footer
+                      isBlurred
+                      css={{
+                        position: "absolute",
+                        bgBlur: "#ffffff",
+                        borderTop:
+                          "$borderWeights$light solid rgba(255, 255, 255, 0.2)",
+                        bottom: 0,
+                        zIndex: 1,
+                      }}
                     >
-                      New
-                    </Text>
-                    <Text h3 color="black">
-                      {home.title}
-                    </Text>
-                  </Col>
-                </Card.Header>
-                <Card.Body css={{ p: 0 }}>
-                  <div className="w-[300px] h-[300px]">
-                    <Card.Image
-                      src={home.image}
-                      width="100%"
-                      height="100%"
-                      objectFit="cover"
-                      alt="Card example background"
-                    />
-                  </div>
-                </Card.Body>
-                <Card.Footer
-                  isBlurred
-                  css={{
-                    position: "absolute",
-                    bgBlur: "#ffffff",
-                    borderTop:
-                      "$borderWeights$light solid rgba(255, 255, 255, 0.2)",
-                    bottom: 0,
-                    zIndex: 1,
-                  }}
-                >
-                  <Row>
-                    <Col>
-                      <Text color="#000" size={12}>
-                        Available soon.
-                      </Text>
-                      <Text color="#000" size={12}>
-                        Get notified.
-                      </Text>
-                    </Col>
-                    <Col>
-                      <Row justify="flex-end">
-                        <Button flat auto rounded color="secondary">
-                          <Text
-                            css={{ color: "inherit" }}
-                            size={12}
-                            weight="bold"
-                            transform="uppercase"
-                          >
-                            Notify Me
+                      <Row>
+                        <Col>
+                          <Text color="#000" size={12}>
+                            Available soon.
                           </Text>
-                        </Button>
+                          <Text color="#000" size={12}>
+                            Get notified.
+                          </Text>
+                        </Col>
+                        <Col>
+                          <Row justify="flex-end">
+                            <Button flat auto rounded color="secondary">
+                              <Text
+                                css={{ color: "inherit" }}
+                                size={12}
+                                weight="bold"
+                                transform="uppercase"
+                              >
+                                Notify Me
+                              </Text>
+                            </Button>
+                          </Row>
+                        </Col>
                       </Row>
-                    </Col>
-                  </Row>
-                </Card.Footer>
-              </Card>
+                    </Card.Footer>
+                  </Card>
+                </div>
+              ))
+          ) : (
+
+            <div className="w-full">
+              <Spinner label="Primary" color="primary" labelColor="primary" className="text-6xl"/>
             </div>
-          ))}
+          )}
         </div>
         <button
           className="hidden md:flex bg-gray-600 p-4 -mx-4 rounded-l-full focus:outline-none"
