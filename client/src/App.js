@@ -6,6 +6,7 @@ import Reserve from "./components/Reserve";
 import Reservations from "./components/Reservations";
 import AddHome from "./components/AddHome";
 import RemoveHome from "./components/RemoveHome";
+import SingleHome from "./components/SingleHome";
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
           <Route path="/Reservations" element={<Reservations />} />
           <Route path="/AddHome" element={<AddHome />} />
           <Route path="/RemoveHome" element={<RemoveHome />} />
+          <Route path="Home/SingleHome/:homeId" element={<SingleHome />} />{" "}
+          {/* Pass homeId as a URL parameter */}
         </Routes>
       </div>
     </Layout>

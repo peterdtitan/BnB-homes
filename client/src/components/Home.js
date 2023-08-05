@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from "react";
 // import homes from "../data/dummy";
 import { Card, Col, Row, Button, Text } from "@nextui-org/react";
-import { fetchAllHomes } from "../redux/homesSlice";
+import { fetchAllHomes, showSingleHome } from "../redux/homesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+// import SingleHome from "./SingleHome";
 
 export default function Home() {
   const scrollContainerRef = useRef(null);
@@ -28,11 +30,17 @@ export default function Home() {
 
   const dispatch = useDispatch();
   const homes = useSelector((state) => state.homes.homes);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch all homes when the component mounts
     dispatch(fetchAllHomes());
   }, [dispatch]);
+
+  const handleCardClick = async (homeId) => {
+    await dispatch(showSingleHome(homeId));
+    navigate(`/Home/SingleHome/${homeId}`); // Include homeId in the URL path
+  };
 
   return (
     <div className="w-[100%] h-screen flex flex-col items-center justify-evenly -mt-10">
@@ -57,10 +65,12 @@ export default function Home() {
             <div
               key={home.id}
               className="min-w-80 h-[500px] flex items-center flex-shrink-0 mx-2"
+              onClick={() => handleCardClick(home.id)}
             >
               <Card
                 css={{ w: "100%", h: "300px" }}
                 className="transform hover:scale-110 transition-all duration-300"
+                key={home.id}
               >
                 <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
                   <Col>
