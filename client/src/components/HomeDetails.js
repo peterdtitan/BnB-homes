@@ -10,6 +10,7 @@ export default function HomeDetails() {
   const { homeId } = useParams();
   const homes = useSelector((state) => state.homes.homes);
   const selectedHome = homes.find((home) => home.id === parseInt(homeId));
+  const navigate = useNavigate();
 
   if (!selectedHome) {
     return <div>Home not found.</div>;
@@ -55,7 +56,8 @@ export default function HomeDetails() {
                 </div>
             </div>
         </div>
-        <button className='bg-green-400 animate-pulse mt-4 md:mt-0 md:absolute px-4 py-2 md:rounded-l-full xs:rounded-full right-0 bottom-8 md:px-12 md:py-4'>
+        <button onClick={() => navigate(`/Home/${homeId}/Reserve`)}
+           className='bg-green-400 animate-pulse mt-4 md:mt-0 md:absolute px-4 py-2 md:rounded-l-full xs:rounded-full right-0 bottom-8 md:px-12 md:py-4'>
             <p className='text-xl font-semibold italic'>RESERVE</p>
         </button>
     </div>

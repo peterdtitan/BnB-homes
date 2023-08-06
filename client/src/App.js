@@ -47,7 +47,7 @@ function App() {
         <Routes>
           <Route path="/Home" element={<Home />} />
           <Route path="/Home/:homeId" element={<HomeDetails />} />
-          <Route path="/Reserve" element={<Reserve />} />
+          <Route path="/Home/:homeId/Reserve" element={<Reserve />} />
           <Route path="/Reservations" element={<Reservations />} />
           <Route path="/AddHome" element={<AddHome />} />
           <Route path="/RemoveHome" element={<RemoveHome />} />
