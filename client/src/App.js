@@ -11,6 +11,7 @@ import RemoveHome from "./components/RemoveHome";
 import HomeDetails from "./components/HomeDetails";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Splash from './components/Splash';
 
 
 function App() {
@@ -18,7 +19,6 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    // Fetch all homes when the component mounts
     dispatch(fetchAllHomes());
   }, [dispatch]);
 
@@ -27,24 +27,21 @@ function App() {
   const isAuthPage = location.pathname === "/Login" || location.pathname === "/Register";
 
   if (user) {
-    // If user data is loading, you can show a loading indicator or any other content
-    return <div>Loading...</div>;
-  }
-
-  if (isAuthPage) {
-    // If the current path is "/Login" or "/Register", render the respective component without the Layout
     return (
       <Routes>
         <Route path="/Login" element={<Login />} />
         <Route path="/Register" element={<Register />} />
+        <Route path="/" element={<Splash />} />
       </Routes>
-    );
+    )
   }
+
 
   return (
     <Layout>
       <div className="content">
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/Home" element={<Home />} />
           <Route path="/Home/:homeId" element={<HomeDetails />} />
           <Route path="/Home/:homeId/Reserve" element={<Reserve />} />
