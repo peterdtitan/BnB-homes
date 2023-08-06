@@ -9,6 +9,8 @@ import Reservations from "./components/Reservations";
 import AddHome from "./components/AddHome";
 import RemoveHome from "./components/RemoveHome";
 import HomeDetails from "./components/HomeDetails";
+import Login from "./components/Login";
+import Register from "./components/Register";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,22 +20,28 @@ function App() {
     dispatch(fetchAllHomes());
   }, [dispatch]);
 
-  return (
-    <Layout>
-      <div className="content">
-        <Routes>
-          <Route path="/Home" element={<Home />} />
-          <Route path="/Home/:homeId" element={<HomeDetails />} />
-          <Route path="/Reserve" element={<Reserve />} />
-          <Route path="/Reservations" element={<Reservations />} />
-          <Route path="/AddHome" element={<AddHome />} />
-          <Route path="/RemoveHome" element={<RemoveHome />} />
-  
-          {/* Pass homeId as a URL parameter */}
-        </Routes>
-      </div>
-    </Layout>
-  );
+  const user = useSelector((state) => state.user.user);
+
+  if (user) {
+    return <div>Loading...</div>;
+  } else {
+    return (
+      <Layout>
+        <div className="content">
+          <Routes>
+            <Route path="/Login" element={<Login />} />
+            <Route path="/Register" element={<Register />} />
+            <Route path="/Home" element={<Home />} />
+            <Route path="/Home/:homeId" element={<HomeDetails />} />
+            <Route path="/Reserve" element={<Reserve />} />
+            <Route path="/Reservations" element={<Reservations />} />
+            <Route path="/AddHome" element={<AddHome />} />
+            <Route path="/RemoveHome" element={<RemoveHome />} />
+          </Routes>
+        </div>
+      </Layout>
+    );
+  }
 }
 
 export default App;
