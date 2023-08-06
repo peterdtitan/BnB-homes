@@ -30,7 +30,7 @@ export default function Register() {
                     placeholder="Create your password"
                 />
             </div>
-            <button className='px-6 py-1 rounded-md bg-green-600 hover:bg-green-900 text-white'>Login</button>
+            <button className='px-6 py-1 rounded-md bg-green-600 hover:bg-green-900 text-white'>Register</button>
             </form>
         </div>
     </div>
