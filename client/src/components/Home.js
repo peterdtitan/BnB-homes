@@ -10,7 +10,6 @@ import { Spinner } from "@nextui-org/react";
 
 export default function Home() {
   const scrollContainerRef = useRef(null);
-
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
@@ -30,17 +29,17 @@ export default function Home() {
   };
 
   const dispatch = useDispatch();
-  //const homes = useSelector((state) => state.homes.homes);
+  const homes = useSelector((state) => state.homes.homes);
 
   useEffect(() => {
     // Fetch all homes when the component mounts
     dispatch(fetchAllHomes());
   }, [dispatch]);
 
-  const handleCardClick = async (homeId) => {
-    await dispatch(showSingleHome(homeId));
-    navigate(`/Home/SingleHome/${homeId}`); // Include homeId in the URL path
-  };
+  // const handleCardClick = async (homeId) => {
+  //   await dispatch(showSingleHome(homeId));
+  //   navigate(`/Home/${homeId}`); // Include homeId in the URL path
+  // };
 
   return (
     <div className="w-[100%] h-screen flex flex-col items-center justify-evenly -mt-10">
@@ -66,7 +65,6 @@ export default function Home() {
                 <div
               key={home.id}
               className="min-w-80 h-[500px] flex items-center flex-shrink-0 mx-2"
-              onClick={() => handleCardClick(home.id)}
             >
                   <Card
                 css={{ w: "100%", h: "300px" }}
