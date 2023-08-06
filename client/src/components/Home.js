@@ -1,11 +1,9 @@
 import React, { useEffect, useRef } from "react";
-// import homes from "../data/dummy";
 import { Card, Col, Row, Button, Text } from "@nextui-org/react";
 import { fetchAllHomes, showSingleHome } from "../redux/homesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-// import SingleHome from "./SingleHome";
 import { Spinner } from "@nextui-org/react";
 
 export default function Home() {
@@ -36,10 +34,11 @@ export default function Home() {
     dispatch(fetchAllHomes());
   }, [dispatch]);
 
-  // const handleCardClick = async (homeId) => {
-  //   await dispatch(showSingleHome(homeId));
-  //   navigate(`/Home/${homeId}`); // Include homeId in the URL path
-  // };
+  const navigate = useNavigate();
+
+  const handleCardClick= (homeId) =>{
+    navigate(`/Home/${homeId}`); 
+  };
 
   return (
     <div className="w-[100%] h-screen flex flex-col items-center justify-evenly -mt-10">
@@ -65,6 +64,7 @@ export default function Home() {
                 <div
               key={home.id}
               className="min-w-80 h-[500px] flex items-center flex-shrink-0 mx-2"
+              onClick={() => handleCardClick(home.id)}
             >
                   <Card
                 css={{ w: "100%", h: "300px" }}
@@ -79,10 +79,12 @@ export default function Home() {
                           transform="uppercase"
                           color="#ffffff"
                         >
-                          New
+                          <p className="rounded-full w-12 bg-green-300/90 px-2 py-1 text-green-700">New</p>
                         </Text>
-                        <Text h3 color="black">
-                          {home.title}
+                        <Text h3 color="#fffff">
+                          <p className="p-2 bg-black/80 max-w-[60%] mt-2 text-white rounded-lg font-medium">
+                            {home.name.toUpperCase()}
+                          </p>
                         </Text>
                       </Col>
                     </Card.Header>
@@ -111,22 +113,22 @@ export default function Home() {
                       <Row>
                         <Col>
                           <Text color="#000" size={12}>
-                            Available soon.
+                            <p className="animate-pulse font-semibold px-2 py-1 rounded-md">Holiday season!</p>
                           </Text>
                           <Text color="#000" size={12}>
-                            Get notified.
+                            <p className="animate-pulse2 font-medium bg-yellow-200 px-2 py-1 rounded-md">Discounts up to 50%</p>
                           </Text>
                         </Col>
                         <Col>
                           <Row justify="flex-end">
-                            <Button flat auto rounded color="secondary">
+                            <Button flat auto rounded color="primary">
                               <Text
                                 css={{ color: "inherit" }}
                                 size={12}
                                 weight="bold"
                                 transform="uppercase"
                               >
-                                Notify Me
+                                View Home
                               </Text>
                             </Button>
                           </Row>
