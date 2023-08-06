@@ -1,6 +1,5 @@
 import React from 'react'
 import { useNavigate, useParams  } from "react-router-dom";
-import homes from '../data/dummy';
 import { useDispatch, useSelector } from "react-redux";
 import { Tooltip } from "@nextui-org/react";
 import { AiOutlineWifi } from 'react-icons/ai'
@@ -10,21 +9,23 @@ import { BiSolidParking } from 'react-icons/bi'
 export default function HomeDetails() {
   const { homeId } = useParams();
   const homes = useSelector((state) => state.homes.homes);
-  const selectedHome = homes.find((home) => home.id === homeId);  
+  const selectedHome = homes.find((home) => home.id === parseInt(homeId));
 
   if (!selectedHome) {
     return <div>Home not found.</div>;
   }
 
   return (
-    <div className='flex flex-col md:flex-row justify-center items-center md:justify-between  md:items-start px-10 mt-4 md:mt-20'>
-        <div className='md:w-[60%] rounded-md'>
+    <div className='flex flex-col gap-4 md:flex-row justify-center items-center md:justify-between md:items-start px-10 mt-4 md:mt-20'>
+        <div className='w-full md:w-[65%] flex rounded-md'>
             <img
-              src={homes[0].image}
+                src={selectedHome.image}
+                alt={selectedHome.name}
+                className='w-full md:w-[100%] h-[300px] md:h-[500px] object-cover object-center'
             />
         </div>
         <div className='flex flex-col gap-y-2 md:mt-0 mt-10'>
-            <h1 className='p-2 rounded-md bg-slate-400 font-medium'>{homes[0].title.toUpperCase()}</h1>
+            <h1 className='p-2 rounded-md bg-slate-400 font-medium'>{selectedHome.name.toUpperCase()}</h1>
             <p className='max-w-sm p-2 rounded-md bg-slate-200'>
                 {homes[0].description}
             </p>
