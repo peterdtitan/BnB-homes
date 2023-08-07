@@ -4,18 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { addReservations } from "../redux/ReservationsSlice";
 import { fetchCityData } from "../redux/city/citySlice";
 
-const cities = ["City A", "City B", "City C", "City D"];
 
 export default function Reserve() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
 
+  const navigate = useNavigate();
+
   const { homeId } = useParams();
-  const reservations = useSelector((state) => state.reservations.reservations);
-  const selectedHome = reservations.find(
-    (home) => home.id === parseInt(homeId)
-  );
+  const homes = useSelector((state) => state.homes.homes);
+  const selectedHome = homes.find((home) => home.id === parseInt(homeId));
   const cityData = useSelector((state) => state.city.data);
 
   const handleCityChange = (e) => {
@@ -35,12 +34,13 @@ export default function Reserve() {
       startDate,
       endDate,
       city: selectedCity,
+      home_id: homeId,
     };
 
     try {
       dispatch(addReservations(reservationsData));
-      
       console.log("Reservation submitted successfully");
+      navigate('/Reservations')
     } catch (error) {
       
       console.error("Error submitting reservation:", error);
