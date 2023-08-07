@@ -31,22 +31,22 @@ export default function Reserve() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(selectedCity)
-    const reservationsData = {
-      reservation:{
-        startDate,
-        endDate,
+    const reservation = {
+     
+        start_date: startDate,
+        end_date: endDate,
         city_id: selectedCity,
         home_id: homeId,
-      }
     };
-    console.log(reservationsData)
+    console.log(reservation)
     try {
-      dispatch(addReservations(reservationsData));
+      await dispatch(addReservations(reservation));
       console.log("Reservation submitted successfully");
       navigate('/Reservations')
     } catch (error) {
       
       console.error("Error submitting reservation:", error);
+      console.log("Response:", error.response);
     }
   };
 
