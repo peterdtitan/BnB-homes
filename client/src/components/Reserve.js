@@ -38,7 +38,7 @@ export default function Reserve() {
     };
 
     try {
-      await dispatch(addReservations(reservationsData));
+      dispatch(addReservations(reservationsData));
       
       console.log("Reservation submitted successfully");
     } catch (error) {

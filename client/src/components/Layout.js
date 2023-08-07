@@ -1,11 +1,19 @@
 import React from "react";
-// import { Route, Routes } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import { HiHomeModern } from 'react-icons/hi2'
 import { HiDocumentRemove } from 'react-icons/hi'
 import { RiReservedFill, RiFileList3Fill } from 'react-icons/ri'
+import { clearUser } from '../redux/user/userSlice'
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Layout({ children }) {
+  const dispatch = useDispatch()
+
+  const handleLogout = () => {
+    dispatch(clearUser());
+    window.location.reload();
+  };
+
   return (
     <div>
       <button
@@ -107,8 +115,7 @@ export default function Layout({ children }) {
               </a>
             </li>
             <li>
-              <a
-                href="#"
+              <p
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg
@@ -126,8 +133,8 @@ export default function Layout({ children }) {
                     d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
                   />
                 </svg>
-                <span className="flex-1 ml-3 whitespace-nowrap">Sign Out</span>
-              </a>
+                <button onClick={handleLogout} className="flex-1 -ml-12 whitespace-nowrap">Sign Out</button>
+              </p>
             </li>
           </ul>
 

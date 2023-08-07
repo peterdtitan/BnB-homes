@@ -58,7 +58,7 @@ const reservationsSlice = createSlice({
       })
       .addCase(fetchAllReservations.fulfilled, (state, action) => {
         state.status = "idle";
-        state.reservations = action.payload; // Use "reservations" instead of "homes"
+        state.reservations = action.payload;
       })
       .addCase(fetchAllReservations.rejected, (state, action) => {
         state.status = "idle";

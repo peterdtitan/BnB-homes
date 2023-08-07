@@ -1,9 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Input} from "@nextui-org/react";
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 import backgroundImage from '../img/register-splash.jpg'; 
+import { setUser } from '../redux/user/userSlice'
 
 export default function Register() {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const register = async (e) => {
+        e.preventDefault();
+        if (username && password) {
+          dispatch(setUser({ username: username, password: password }))
+          localStorage.setItem('user', JSON.stringify({ username, password }));
+          navigate('/');
+        } else {
+          console.log('Please enter a valid username and password.');
+        }
+    };
 
   return (
     <div className='h-screen bg-cover bg-center' style={{ backgroundImage: `url(${backgroundImage})` }}>
@@ -19,6 +37,7 @@ export default function Register() {
                     label="Username"
                     variant="bordered"
                     placeholder="Enter new username"
+                    onChange={(e) => setUsername(e.target.value)}
                 />
             </div>
             <div>
@@ -28,9 +47,10 @@ export default function Register() {
                     label="Password"
                     variant="bordered"
                     placeholder="Create your password"
+                    onChange={(e) => setPassword(e.target.value)}
                 />
             </div>
-            <button className='px-6 py-1 rounded-md bg-green-600 hover:bg-green-900 text-white'>Register</button>
+            <button onClick={(e)=>register(e)} className='px-6 py-1 rounded-md bg-green-600 hover:bg-green-900 text-white'>Register</button>
             </form>
         </div>
     </div>
