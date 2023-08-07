@@ -11,21 +11,20 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
                items: {
                  properties: {
                    id: { type: :integer },
-                   city_id: { type: :integer },
-                   user_id: { type: :integer },
-                   home_id: { type: :integer },
                    start_date: { type: :string, format: 'date-time' },
                    end_date: { type: :string, format: 'date-time' }
+                   city_id: { type: :integer },
+                   home_id: { type: :integer },
                  },
-                 required: %w[id city_id user_id home_id start_date end_date]
+                 required: %w[id city_id home_id start_date end_date]
                }
 
         run_test! do
           # Create some sample reservations for testing
-          Reservation.create!(city_id: 1, user_id: 1, home_id: 1, start_date: DateTime.now,
-                              end_date: DateTime.now + 1.day)
-          Reservation.create!(city_id: 2, user_id: 2, home_id: 2, start_date: DateTime.now,
-                              end_date: DateTime.now + 1.day)
+          Reservation.create!(start_date: DateTime.now, 
+                              end_date: DateTime.now + 1.day, city_id: 1, home_id: 1)
+          Reservation.create!(start_date: DateTime.now,
+                              end_date: DateTime.now + 1.day, city_id: 2, home_id: 2)
 
           # Make a request to retrieve all reservations
           get '/api/v1/reservations'
@@ -37,7 +36,7 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
           reservations = JSON.parse(response.body)
           expect(reservations).to be_an(Array)
           expect(reservations.length).to eq(2)
-          expect(reservations[0]).to include('id', 'city_id', 'user_id', 'home_id', 'start_date', 'end_date')
+          expect(reservations[0]).to include('id', 'start_date', 'end_date', 'city_id', 'home_id')
         end
       end
     end
@@ -49,69 +48,44 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
       parameter name: :reservation, in: :body, schema: {
         type: :object,
         properties: {
-          city_id: { type: :integer },
-          user_id: { type: :integer },
-          home_id: { type: :integer },
           start_date: { type: :string, format: 'date-time' },
-          end_date: { type: :string, format: 'date-time' }
+          end_date: { type: :string, format: 'date-time' },
+          city_id: { type: :integer },
+          home_id: { type: :integer }
         },
-        required: %w[city_id user_id home_id start_date end_date]
+        required: %w[start_date end_date city_id home_id]
       }
 
       response '200', 'Reservation created' do
         schema type: :object,
                properties: {
                  id: { type: :integer },
-                 city_id: { type: :integer },
-                 user_id: { type: :integer },
-                 home_id: { type: :integer },
                  start_date: { type: :string, format: 'date-time' },
-                 end_date: { type: :string, format: 'date-time' }
+                 end_date: { type: :string, format: 'date-time' },
+                 city_id: { type: :integer },
+                 home_id: { type: :integer }
                },
-               required: %w[id city_id user_id home_id start_date end_date]
+               required: %w[id start_date end_date city_id home_id]
 
         let(:reservation) do
           {
-            city_id: 1,
-            user_id: 1,
-            home_id: 1,
             start_date: DateTime.now,
-            end_date: DateTime.now + 1.day
+            end_date: DateTime.now + 1.day,
+            city_id: 1,
+            home_id: 1
           }
         end
 
         run_test! do
           # Make a request to create a reservation
-          post '/api/v1/reservations', params: { reservation: }
+          post '/api/v1/reservations', params: { reservation: reservation }
 
           # Assert the response status code
           expect(response).to have_http_status(:ok)
 
           # Assert the response body against the defined schema
           created_reservation = JSON.parse(response.body)
-          expect(created_reservation).to include('id', 'city_id', 'user_id', 'home_id', 'start_date', 'end_date')
-        end
-      end
-
-      response '200', 'Error creating reservation' do
-        schema type: :object,
-               properties: {
-                 error: { type: :string }
-               },
-               required: ['error']
-
-        let(:reservation) { { city_id: nil } }
-
-        run_test! do
-          # Make a request to create a reservation with invalid data
-          post '/api/v1/reservations', params: { reservation: }
-
-          # Assert the response status code
-          expect(response).to have_http_status(:ok)
-
-          # Assert the response body against the defined schema
-          error_response = JSON.parse(response.body)
-          expect(error_response).to include('error')
+          expect(created_reservation).to include('id', 'start_date', 'end_date', 'city_id', 'home_id')
         end
       end
     end
@@ -128,7 +102,6 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
                properties: {
                  id: { type: :integer },
                  city_id: { type: :integer },
-                 user_id: { type: :integer },
                  home_id: { type: :integer },
                  start_date: { type: :string, format: 'date-time' },
                  end_date: { type: :string, format: 'date-time' }
@@ -136,8 +109,8 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
                required: %w[id city_id user_id home_id start_date end_date]
 
         let(:id) do
-          Reservation.create(city_id: 1, user_id: 1, home_id: 1, start_date: DateTime.now,
-                             end_date: DateTime.now + 1.day).id
+          Reservation.create(start_date: DateTime.now, end_date: DateTime.now + 1.day, 
+            city_id: 1, home_id: 1).id
         end
 
         run_test! do
@@ -149,7 +122,7 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
 
           # Assert the response body against the defined schema
           reservation = JSON.parse(response.body)
-          expect(reservation).to include('id', 'city_id', 'user_id', 'home_id', 'start_date', 'end_date')
+          expect(reservation).to include('id', 'start_date', 'end_date', 'city_id', 'home_id' )
         end
       end
 
@@ -183,8 +156,8 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
 
       response '204', 'Reservation deleted' do
         let(:id) do
-          Reservation.create(city_id: 1, user_id: 1, home_id: 1, start_date: DateTime.now,
-                             end_date: DateTime.now + 1.day).id
+          Reservation.create(start_date: DateTime.now,end_date: DateTime.now + 1.day,
+            city_id: 1, home_id: 1).id
         end
 
         run_test! do

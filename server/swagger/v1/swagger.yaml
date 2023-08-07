@@ -4,7 +4,7 @@ info:
   title: API V1
   version: v1
 paths:
-  "/users/login":
+  "/login":
     post:
       summary: User Sign In
       tags:
@@ -33,17 +33,14 @@ paths:
                     properties:
                       id:
                         type: integer
-                      full_name:
+                      username:
                         type: string
                       email:
                         type: string
-                      role:
-                        type: string
                     required:
                     - id
-                    - full_name
+                    - username
                     - email
-                    - role
                 required:
                 - status
                 - data
@@ -304,25 +301,22 @@ paths:
                   properties:
                     id:
                       type: integer
-                    city_id:
-                      type: integer
-                    user_id:
-                      type: integer
-                    home_id:
-                      type: integer
                     start_date:
                       type: string
                       format: date-time
                     end_date:
                       type: string
                       format: date-time
+                    city_id:
+                      type: integer
+                    home_id:
+                      type: integer
                   required:
                   - id
-                  - city_id
-                  - user_id
-                  - home_id
                   - start_date
                   - end_date
+                  - city_id
+                  - home_id
     post:
       summary: Create a reservation
       tags:
@@ -338,18 +332,16 @@ paths:
                 properties:
                   id:
                     type: integer
-                  city_id:
-                    type: integer
-                  user_id:
-                    type: integer
-                  home_id:
-                    type: integer
                   start_date:
                     type: string
                     format: date-time
                   end_date:
                     type: string
                     format: date-time
+                  city_id:
+                    type: integer
+                  home_id:
+                    type: integer
                   error:
                     type: string
                 required:
@@ -360,24 +352,21 @@ paths:
             schema:
               type: object
               properties:
-                city_id:
-                  type: integer
-                user_id:
-                  type: integer
-                home_id:
-                  type: integer
                 start_date:
                   type: string
                   format: date-time
                 end_date:
                   type: string
                   format: date-time
+                city_id:
+                  type: integer
+                home_id:
+                  type: integer
               required:
-              - city_id
-              - user_id
-              - home_id
               - start_date
               - end_date
+              - city_id
+              - home_id
   "/api/v1/reservations/{id}":
     get:
       summary: Retrieve a reservation
@@ -399,25 +388,22 @@ paths:
                 properties:
                   id:
                     type: integer
-                  city_id:
-                    type: integer
-                  user_id:
-                    type: integer
-                  home_id:
-                    type: integer
                   start_date:
                     type: string
                     format: date-time
                   end_date:
                     type: string
                     format: date-time
+                  city_id:
+                    type: integer
+                  home_id:
+                    type: integer
                 required:
                 - id
-                - city_id
-                - user_id
-                - home_id
                 - start_date
                 - end_date
+                - city_id
+                - home_id
         '404':
           description: Reservation not found
           content:
@@ -469,19 +455,16 @@ paths:
                   properties:
                     id:
                       type: integer
-                    full_name:
+                    username:
                       type: string
                     email:
                       type: string
-                    role:
-                      type: string
                   required:
                   - id
-                  - full_name
+                  - username
                   - email
-                  - role
 servers:
-- url: https://{defaultHost}
+- url: http://{defaultHost}
   variables:
     defaultHost:
       default: localhost:3000
