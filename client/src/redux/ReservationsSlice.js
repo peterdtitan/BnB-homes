@@ -22,18 +22,16 @@ export const fetchAllReservations = createAsyncThunk(
 // Async Thunk for adding a new reservation
 export const addReservations = createAsyncThunk(
   "homes/addReservations",
-  async ({ reservation }) => {
-    const response = await axios.post(
-      "/api/v1/reservations",
-      JSON.stringify(reservation),
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    );
-    
-    return response.data;
+  async (reservationData) => {
+    const response = await fetch('http://localhost:3000/api/v1/reservations', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(reservationData),
+    });
+    const data = await response.json();
+    return data;
   }
 );
 

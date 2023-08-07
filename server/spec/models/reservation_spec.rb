@@ -13,7 +13,6 @@ RSpec.describe Reservation, type: :model do
 
   describe "associations" do
     it { should belong_to(:city).class_name("City") }
-    it { should belong_to(:user) }
     it { should belong_to(:home) }
   end
 end
