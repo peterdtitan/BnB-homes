@@ -11,16 +11,23 @@ export default function Reservations() {
   }, [dispatch]);
 
   return (
-    <div>
-      <h1>Reservations</h1>
-      <ul>
+    <div className="flex flex-col items-center">
+      <h1 className="text-2xl font-bold mb-4">Reservations</h1>
+      <div className="grid grid-cols-1 gap-4">
         {reservations.map((reservation) => (
-          <li key={reservation.id}>
-            <p>Start Date: {reservation.start_date}</p>
-            <p>End Date: {reservation.end_date}</p>
-          </li>
+          <div
+            key={reservation.id}
+            className="p-4 bg-white rounded-md shadow-md flex flex-col items-center justify-center"
+          >
+            <p className="text-lg font-semibold">
+              Start Date: <span className="animate-pulse2">{reservation.start_date}</span>
+            </p>
+            <p className="text-lg font-semibold">
+              End Date: <span className="animate-pulse">{reservation.end_date}</span>
+            </p>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

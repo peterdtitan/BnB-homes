@@ -22,7 +22,7 @@ export const fetchAllReservations = createAsyncThunk(
 // Async Thunk for adding a new reservations
 export const addReservations = createAsyncThunk(
   "homes/addReservations",
-  async (reservationsData) => {
+  async ({reservationsData}) => {
     const response = await axios.post(
       "http://127.0.0.1:3000/api/v1/reservations",
       reservationsData
@@ -31,7 +31,6 @@ export const addReservations = createAsyncThunk(
   }
 );
 
-// Async Thunk for deleting a home
 export const deleteReservations = createAsyncThunk(
   "homes/deleteReservations",
   async (reservationsId) => {

@@ -30,10 +30,11 @@ export default function Reserve() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(selectedCity)
     const reservationsData = {
       startDate,
       endDate,
-      city: selectedCity,
+      city_id: selectedCity,
       home_id: homeId,
     };
 
@@ -93,7 +94,7 @@ export default function Reserve() {
         >
           <option value="">Select a city</option>
           {cityData.map((city) => (
-            <option key={city.id} value={city.name}>
+            <option key={city.id} value={city.id}>
               {city.name}
             </option>
           ))}
