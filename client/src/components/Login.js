@@ -5,6 +5,24 @@ import backgroundImage from '../img/login-splash.jpg';
 
 export default function Login() {
 
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.user.user);
+
+    const login = async () => {
+        if (username && password) {
+          dispatch(setUser({ username, password }));
+
+          localStorage.setItem('username', username);
+          localStorage.setItem('password', password);
+        } else {
+
+          console.log('Please enter a valid username and password.');
+        }
+    };
+
   return (
     <div className='h-screen bg-cover bg-center' style={{ backgroundImage: `url(${backgroundImage})` }}>
         <div className='flex flex-col gap-8 items-center justify-center backdrop-blur-sm h-screen'>
