@@ -58,7 +58,7 @@ const reservationsSlice = createSlice({
       })
       .addCase(fetchAllReservations.fulfilled, (state, action) => {
         state.status = "idle";
-        state.homes = action.payload;
+        state.reservations = action.payload; // Use "reservations" instead of "homes"
       })
       .addCase(fetchAllReservations.rejected, (state, action) => {
         state.status = "idle";
@@ -69,7 +69,7 @@ const reservationsSlice = createSlice({
       })
       .addCase(addReservations.fulfilled, (state, action) => {
         state.status = "idle";
-        state.homes.push(action.payload);
+        state.reservations.push(action.payload); 
       })
       .addCase(addReservations.rejected, (state, action) => {
         state.status = "idle";
@@ -80,7 +80,7 @@ const reservationsSlice = createSlice({
       })
       .addCase(deleteReservations.fulfilled, (state, action) => {
         state.status = "idle";
-        state.homes = state.homes.filter((home) => home.id !== action.payload);
+        state.reservations = state.reservations.filter((reservation) => reservation.id !== action.payload);
       })
       .addCase(deleteReservations.rejected, (state, action) => {
         state.status = "idle";

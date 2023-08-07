@@ -1,35 +1,61 @@
-import React, { useState } from 'react';
-import { useNavigate, useParams  } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { addReservations } from "../redux/ReservationsSlice";
+import { fetchCityData } from "../redux/city/citySlice";
 
-const cities = ['City A', 'City B', 'City C', 'City D'];
+const cities = ["City A", "City B", "City C", "City D"];
 
 export default function Reserve() {
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [selectedCity, setSelectedCity] = useState('');
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
 
   const { homeId } = useParams();
-  const homes = useSelector((state) => state.homes.homes);
-  const selectedHome = homes.find((home) => home.id === parseInt(homeId));
+  const reservations = useSelector((state) => state.reservations.reservations);
+  const selectedHome = reservations.find(
+    (home) => home.id === parseInt(homeId)
+  );
+  const cityData = useSelector((state) => state.city.data);
 
   const handleCityChange = (e) => {
     setSelectedCity(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCityData());
+  }, [dispatch]);
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Reservation data:', {
+    const reservationsData = {
       startDate,
       endDate,
       city: selectedCity,
-    });
+    };
+
+    try {
+      await dispatch(addReservations(reservationsData));
+      
+      console.log("Reservation submitted successfully");
+    } catch (error) {
+      
+      console.error("Error submitting reservation:", error);
+    }
   };
 
   return (
     <form className="p-4 border border-gray-300 rounded-lg shadow-lg">
-      <h2 className="text-xl font-bold mb-4 bg-green-200 p-2 rounded-md">Reservation For &nbsp;
-        <span className="animate-pulse">{selectedHome.name.toUpperCase()}</span>
+      <h2 className="text-xl font-bold mb-4 bg-green-200 p-2 rounded-md">
+        Reservation For &nbsp;
+        {selectedHome && (
+          <span className="animate-pulse">
+            {selectedHome.name.toUpperCase()}
+          </span>
+        )}
       </h2>
       <div className="mb-4">
         <label htmlFor="startDate" className="block font-medium">
@@ -56,7 +82,7 @@ export default function Reserve() {
         />
       </div>
       <div className="mb-4">
-        <label htmlFor="city" className="block font-medium">
+      <label htmlFor="city" className="block font-medium">
           Select City
         </label>
         <select
@@ -66,9 +92,9 @@ export default function Reserve() {
           onChange={handleCityChange}
         >
           <option value="">Select a city</option>
-          {cities.map((city) => (
-            <option key={city} value={city}>
-              {city}
+          {cityData.map((city) => (
+            <option key={city.id} value={city.name}>
+              {city.name}
             </option>
           ))}
         </select>
