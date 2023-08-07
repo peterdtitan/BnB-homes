@@ -32,12 +32,14 @@ export default function Reserve() {
     e.preventDefault();
     console.log(selectedCity)
     const reservationsData = {
-      startDate,
-      endDate,
-      city_id: selectedCity,
-      home_id: homeId,
+      reservation:{
+        startDate,
+        endDate,
+        city_id: selectedCity,
+        home_id: homeId,
+      }
     };
-
+    console.log(reservationsData)
     try {
       dispatch(addReservations(reservationsData));
       console.log("Reservation submitted successfully");
