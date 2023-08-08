@@ -13,11 +13,11 @@ class Api::V1::ReservationsController < ApplicationController
     puts "Received parameters: #{params.inspect}"
     @reservation = Reservation.new(reservation_params)
     if @reservation.save
-      render json: @reservation, status: 200
+      render json: @reservation, status: 201
     else
       render json: {
         error: 'Error creating reservation ...'
-      }
+      }, status: :unprocessable_entity
     end
   end
 
