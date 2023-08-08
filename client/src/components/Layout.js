@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { HiHomeModern } from "react-icons/hi2";
 import { HiDocumentRemove } from "react-icons/hi";
@@ -24,6 +24,26 @@ export default function Layout({ children }) {
   const closeSidebar = () => {
     setIsSidebarOpen(false);
   };
+
+  // outside click
+
+  // const handleOutsideClick = (event) => {
+  //   if (
+  //     isSidebarOpen &&
+  //     !event.target.closest("#sidebar-multi-level-sidebar")
+  //   ) {
+  //     closeSidebar();
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   window.addEventListener("click", handleOutsideClick);
+  //   return () => {
+  //     window.removeEventListener("click", handleOutsideClick);
+  //   };
+  // }, [isSidebarOpen]);
+
+  //end outside click
 
   return (
     <div>
