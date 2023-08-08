@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Input } from "@nextui-org/react";
-import { useDispatch } from 'react-redux'; // Remove the useSelector import
+import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import backgroundImage from '../img/login-splash.jpg';
 import { setUser } from '../redux/user/userSlice'
@@ -10,24 +10,17 @@ export default function Login() {
     const [password, setPassword] = useState('');
 
     const navigate = useNavigate();
-    const dispatch = useDispatch(); // Use useDispatch directly
-
-    useEffect(() => {
-        const storedUser = JSON.parse(localStorage.getItem('user'));
-        if (storedUser && storedUser.username === username && storedUser.password === password) {
-            dispatch(setUser(storedUser));
-            navigate('/');
-        }
-    }, [username, password, dispatch, navigate]);
+    const dispatch = useDispatch();
 
     const login = (e) => {
         e.preventDefault();
-        if (username && password) {
-            localStorage.setItem('user', JSON.stringify({ username, password }));
-            dispatch(setUser({ username: username, password: password }));
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+
+        if (storedUser && storedUser.username === username && storedUser.password === password) {
+            dispatch(setUser(storedUser));
             navigate('/');
         } else {
-            console.log('Please enter a valid username and password.');
+            console.log('Incorrect username or password.');
         }
     };
 
