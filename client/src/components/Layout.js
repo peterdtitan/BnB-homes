@@ -1,22 +1,30 @@
-import React from "react";
+import React, { useState } from "react"; // Step 2
 import { Link } from "react-router-dom";
-import { HiHomeModern } from 'react-icons/hi2'
-import { HiDocumentRemove } from 'react-icons/hi'
-import { RiReservedFill, RiFileList3Fill } from 'react-icons/ri'
-import { clearUser } from '../redux/user/userSlice'
+import { HiHomeModern } from "react-icons/hi2";
+import { HiDocumentRemove } from "react-icons/hi";
+import { RiReservedFill, RiFileList3Fill } from "react-icons/ri";
+import { clearUser } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import "./Layout.css";
 
 export default function Layout({ children }) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Step 2
 
   const handleLogout = () => {
     dispatch(clearUser());
+    setIsSidebarOpen(false);
     window.location.reload();
+  };
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
   return (
     <div>
       <button
+        onClick={toggleSidebar} // Step 4
         data-drawer-target="sidebar-multi-level-sidebar"
         data-drawer-toggle="sidebar-multi-level-sidebar"
         aria-controls="sidebar-multi-level-sidebar"
@@ -41,7 +49,9 @@ export default function Layout({ children }) {
 
       <aside
         id="sidebar-multi-level-sidebar"
-        className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+        className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full" // Step 4
+        }`}
         aria-label="Sidebar"
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 flex flex-col items-center justify-evenly">
@@ -64,7 +74,7 @@ export default function Layout({ children }) {
                 to="/Reservations"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
-                <RiReservedFill className="text-gray-300" size={25}/>
+                <RiReservedFill className="text-gray-300" size={25} />
                 <span className="flex-1 ml-3 whitespace-nowrap">
                   My Reservations
                 </span>
@@ -115,9 +125,7 @@ export default function Layout({ children }) {
               </a>
             </li>
             <li>
-              <p
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
+              <p className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                   aria-hidden="true"
@@ -133,7 +141,12 @@ export default function Layout({ children }) {
                     d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
                   />
                 </svg>
-                <button onClick={handleLogout} className="flex-1 -ml-12 whitespace-nowrap">Sign Out</button>
+                <button
+                  onClick={handleLogout}
+                  className="flex-1 -ml-12 whitespace-nowrap"
+                >
+                  Sign Out
+                </button>
               </p>
             </li>
           </ul>
@@ -146,7 +159,7 @@ export default function Layout({ children }) {
         </div>
       </aside>
 
-    <div className="p-4 sm:ml-64">{children}</div>
+      <div className="p-4 sm:ml-64">{children}</div>
     </div>
   );
 }
