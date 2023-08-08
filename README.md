@@ -158,9 +158,8 @@ rspec ./spec/models
 
 👤 **Karan Jain**
 
-- GitHub: [@Karan](https://github.com/karanj2212)
-- Twitter: [@Karan](https://twitter.com/karanjain2212)
--  LinkedIn: [@karanjain](https://www.linkedin.com/in/karanjain2212/)
+- GitHub: [@karanjain2212](https://github.com/karanjain2212)
+- LinkedIn: [@karanjain2212](https://linkedin.com/in/karanjain2212)
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
