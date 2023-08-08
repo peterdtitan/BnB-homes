@@ -1,4 +1,3 @@
-# spec/requests/api/v1/reservations_spec.rb
 require 'swagger_helper'
 
 RSpec.describe Api::V1::ReservationsController, type: :request do
@@ -46,31 +45,32 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
       tags 'Reservations'
       consumes 'application/json'
       produces 'application/json'
-      parameter name: :reservation, in: :body, schema: {
+      parameter name: :reservations, in: :body, schema: {
         type: :object,
         properties: {
+          id: { type: :integer },
           city_id: { type: :integer },
           user_id: { type: :integer },
           home_id: { type: :integer },
           start_date: { type: :string, format: 'date-time' },
           end_date: { type: :string, format: 'date-time' }
         },
-        required: %w[city_id user_id home_id start_date end_date]
+        required: %w[id city_id user_id home_id start_date end_date]
       }
 
       response '200', 'Reservation created' do
         schema type: :object,
-               properties: {
-                 id: { type: :integer },
-                 city_id: { type: :integer },
-                 user_id: { type: :integer },
-                 home_id: { type: :integer },
-                 start_date: { type: :string, format: 'date-time' },
-                 end_date: { type: :string, format: 'date-time' }
-               },
-               required: %w[id city_id user_id home_id start_date end_date]
+        properties: {
+          id: { type: :integer },
+          city_id: { type: :integer },
+          user_id: { type: :integer },
+          home_id: { type: :integer },
+          start_date: { type: :string, format: 'date-time' },
+          end_date: { type: :string, format: 'date-time' }
+        },
+        required: %w[id city_id user_id home_id start_date end_date]
 
-        let(:reservation) do
+        let(:reservations) do
           {
             city_id: 1,
             user_id: 1,
@@ -82,7 +82,7 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
 
         run_test! do
           # Make a request to create a reservation
-          post '/api/v1/reservations', params: { reservation: }
+          post '/api/v1/reservations', params: { reservations: }
 
           # Assert the response status code
           expect(response).to have_http_status(:ok)
@@ -100,11 +100,11 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
                },
                required: ['error']
 
-        let(:reservation) { { city_id: nil } }
+        let(:reservations) { { city_id: nil } }
 
         run_test! do
           # Make a request to create a reservation with invalid data
-          post '/api/v1/reservations', params: { reservation: }
+          post '/api/v1/reservations', params: { reservations: }
 
           # Assert the response status code
           expect(response).to have_http_status(:ok)
@@ -125,15 +125,15 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
 
       response '200', 'Reservation found' do
         schema type: :object,
-               properties: {
-                 id: { type: :integer },
-                 city_id: { type: :integer },
-                 user_id: { type: :integer },
-                 home_id: { type: :integer },
-                 start_date: { type: :string, format: 'date-time' },
-                 end_date: { type: :string, format: 'date-time' }
-               },
-               required: %w[id city_id user_id home_id start_date end_date]
+        properties: {
+          id: { type: :integer },
+          city_id: { type: :integer },
+          user_id: { type: :integer },
+          home_id: { type: :integer },
+          start_date: { type: :string, format: 'date-time' },
+          end_date: { type: :string, format: 'date-time' }
+        },
+        required: %w[id city_id user_id home_id start_date end_date]
 
         let(:id) do
           Reservation.create(city_id: 1, user_id: 1, home_id: 1, start_date: DateTime.now,

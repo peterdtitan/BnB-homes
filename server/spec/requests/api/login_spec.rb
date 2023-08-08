@@ -1,12 +1,12 @@
 require 'swagger_helper'
 
 RSpec.describe Users::SessionsController, type: :request do
-  path '/users/login' do
+  path '/login' do
     post 'User Sign In' do
       tags 'Users'
       consumes 'application/json'
       produces 'application/json'
-      parameter name: :user, in: :body, schema: {
+      parameter name: :users, in: :body, schema: {
         type: :object,
         properties: {
           email: { type: :string },
@@ -30,21 +30,20 @@ RSpec.describe Users::SessionsController, type: :request do
                    type: :object,
                    properties: {
                      id: { type: :integer },
-                     full_name: { type: :string },
-                     email: { type: :string },
-                     role: { type: :string }
+                     username: { type: :string },
+                     email: { type: :string }
                    },
-                   required: %w[id full_name email role]
+                   required: %w[id username email]
                  }
                },
                required: %w[status data]
 
         run_test! do
           # Create a sample user for testing
-          User.create!(full_name: 'John Doe', email: 'john@example.com', password: 'password', role: 'user')
+          User.create!(username: 'John Doe', email: 'john@example.com', password: 'password')
 
           # Make a request to sign in
-          post '/users/login', params: { user: { email: 'john@example.com', password: 'password' } }
+          post '/login', params: { user: { email: 'john@example.com', password: 'password' } }
 
           # Assert the response status code
           expect(response).to have_http_status(:ok)
@@ -53,7 +52,7 @@ RSpec.describe Users::SessionsController, type: :request do
           json_response = JSON.parse(response.body)
           expect(json_response).to include('status', 'data')
           expect(json_response['status']).to include('code', 'message')
-          expect(json_response['data']).to include('id', 'full_name', 'email', 'role')
+          expect(json_response['data']).to include('id', 'username', 'email')
         end
       end
 
@@ -67,7 +66,7 @@ RSpec.describe Users::SessionsController, type: :request do
 
         run_test! do
           # Make a request to sign in without valid credentials
-          post '/users/login', params: { user: { email: 'invalid@example.com', password: 'invalidpassword' } }
+          post '/login', params: { users: { email: 'invalid@example.com', password: 'invalidpassword' } }
 
           # Assert the response status code
           expect(response).to have_http_status(:unauthorized)
@@ -80,7 +79,7 @@ RSpec.describe Users::SessionsController, type: :request do
     end
   end
 
-  path '/users/logout' do
+  path '/logout' do
     delete 'User Sign Out' do
       tags 'Users'
       produces 'application/json'
@@ -96,14 +95,14 @@ RSpec.describe Users::SessionsController, type: :request do
 
         run_test! do
           # Create a sample user for testing
-          User.create!(full_name: 'John Doe', email: 'john@example.com', password: 'password', role: 'user')
+          User.create!(username: 'John Doe', email: 'john@example.com', password: 'password')
 
           # Authenticate the user
-          post '/users/login', params: { user: { email: 'john@example.com', password: 'password' } }
+          post '/login', params: { users: { email: 'john@example.com', password: 'password' } }
           auth_header = response.headers['Authorization']
 
           # Make a request to sign out
-          delete '/users/logout', headers: { Authorization: auth_header }
+          delete '/logout', headers: { Authorization: auth_header }
 
           # Assert the response status code
           expect(response).to have_http_status(:ok)

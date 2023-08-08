@@ -3,7 +3,7 @@ require 'swagger_helper'
 RSpec.describe Api::V1::HomesController, type: :request do
   path '/api/v1/homes' do
     get 'Retrieve all homes' do
-      tags 'Home'
+      tags 'Homes'
       produces 'application/json'
       response '200', 'Homes found' do
         schema type: :array,
@@ -13,17 +13,15 @@ RSpec.describe Api::V1::HomesController, type: :request do
                    name: { type: :string },
                    price: { type: :number },
                    image: { type: :string },
-                   description: { type: :string },
+                   description: { type: :string }
                  },
                  required: %w[id name price image description]
                }
 
         run_test! do
           # Create some sample services for testing
-          Homes.create!(name: 'Homes 1', price: 10.0, image: 'image1.jpg', details: 'description 1', duration: 60,
-                          rating: 4.5)
-          Homes.create!(name: 'Homes 2', price: 15.0, image: 'image2.jpg', details: 'description 2', duration: 90,
-                          rating: 3.8)
+          Home.create!(name: 'Home 1', price: 10.0, image: 'image1.jpg', description: 'description 1')
+          Home.create!(name: 'Home 2', price: 15.0, image: 'image2.jpg', description: 'description 2')
 
           # Make a request to retrieve all services
           get '/api/v1/homes'
@@ -41,43 +39,44 @@ RSpec.describe Api::V1::HomesController, type: :request do
     end
 
     post 'Create a homes' do
-      tags 'Home'
+      tags 'Homes'
       consumes 'application/json'
       produces 'application/json'
-      parameter name: :home, in: :body, schema: {
+      parameter name: :homes, in: :body, schema: {
         type: :object,
         properties: {
+          id: { type: :integer },
           name: { type: :string },
           price: { type: :number },
           image: { type: :string },
           description: { type: :string }
         },
-        required: %w[name price image description]
+        required: %w[id name price image description]
       }
 
       response '200', 'Homes created' do
         schema type: :object,
-               properties: {
-                 id: { type: :integer },
-                 name: { type: :string },
-                 price: { type: :number },
-                 image: { type: :string },
-                 description: { type: :string }
-               },
-               required: %w[id name price image description]
+        properties: {
+          id: { type: :integer },
+          name: { type: :string },
+          price: { type: :number },
+          image: { type: :string },
+          description: { type: :string }
+        },
+        required: %w[id name price image description]
 
-        let(:home) do
+        let(:homes) do
           {
-            name: 'New Home',
+            name: 'New home',
             price: 20.0,
             image: 'new_image.jpg',
-            details: 'New Home description',
+            description: 'New Service Details'
           }
         end
 
         run_test! do
           # Make a request to create a service
-          post '/api/v1/Homes', params: { home: }
+          post '/api/v1/homes', params: { homes: }
 
           # Assert the response status code
           expect(response).to have_http_status(:ok)
@@ -95,11 +94,11 @@ RSpec.describe Api::V1::HomesController, type: :request do
                },
                required: ['error']
 
-        let(:home) { { name: 'Invalid Home', price: 'invalid' } }
+        let(:homes) { { name: 'Invalid Service', price: 'invalid' } }
 
         run_test! do
           # Make a request to create a service with invalid data
-          post '/api/v1/homes', params: { home: }
+          post '/api/v1/homes', params: { homes: }
 
           # Assert the response status code
           expect(response).to have_http_status(:ok)
@@ -116,18 +115,18 @@ RSpec.describe Api::V1::HomesController, type: :request do
     parameter name: :id, in: :path, type: :integer, required: true
 
     get 'Retrieve a home' do
-      tags 'Home'
+      tags 'Homes'
       produces 'application/json'
-      response '200', 'Home found' do
+      response '200', 'Homes found' do
         schema type: :object,
-               properties: {
-                 id: { type: :integer },
-                 name: { type: :string },
-                 price: { type: :number },
-                 image: { type: :string },
-                 description: { type: :string }
-               },
-               required: %w[id name price image description]
+        properties: {
+          id: { type: :integer },
+          name: { type: :string },
+          price: { type: :number },
+          image: { type: :string },
+          description: { type: :string }
+        },
+        required: %w[id name price image description]
 
         let(:id) do
           Home.create(name: 'Home 1', price: 10.0, image: 'image1.jpg', description: 'description 1').id
@@ -146,7 +145,7 @@ RSpec.describe Api::V1::HomesController, type: :request do
         end
       end
 
-      response '404', 'home not found' do
+      response '404', 'Homes not found' do
         schema type: :object,
                properties: {
                  error: { type: :string }
@@ -169,12 +168,13 @@ RSpec.describe Api::V1::HomesController, type: :request do
       end
     end
 
-    delete 'Delete a homes' do
-      tags 'Home'
+    delete 'Delete a service' do
+      tags 'Homes'
       produces 'application/json'
       response '204', 'Homes deleted' do
         let(:id) do
-          Home.create(name: 'Home 1', price: 10.0, image: 'image1.jpg', description: 'description 1').id
+          Home.create(name: 'Home 1', price: 10.0, image: 'image1.jpg', description: 'description 1', duration: 60,
+                         rating: 4.5).id
         end
 
         run_test! do
@@ -189,7 +189,7 @@ RSpec.describe Api::V1::HomesController, type: :request do
         end
       end
 
-      response '404', 'homes not found' do
+      response '404', 'Service not found' do
         schema type: :object,
                properties: {
                  error: { type: :string }
