@@ -4,98 +4,6 @@ info:
   title: API V1
   version: v1
 paths:
-  "/users/login":
-    post:
-      summary: User Sign In
-      tags:
-      - Users
-      parameters: []
-      responses:
-        '200':
-          description: Logged in successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: object
-                    properties:
-                      code:
-                        type: integer
-                      message:
-                        type: string
-                    required:
-                    - code
-                    - message
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      full_name:
-                        type: string
-                      email:
-                        type: string
-                      role:
-                        type: string
-                    required:
-                    - id
-                    - full_name
-                    - email
-                    - role
-                required:
-                - status
-                - data
-        '401':
-          description: Couldn't find an active session
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                  message:
-                    type: string
-                required:
-                - status
-                - message
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                password:
-                  type: string
-              required:
-              - email
-              - password
-  "/users/logout":
-    delete:
-      summary: User Sign Out
-      tags:
-      - Users
-      security:
-      - bearer_auth: []
-      responses:
-        '200':
-          description: Logged out successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                  message:
-                    type: string
-                required:
-                - status
-                - message
   "/api/v1/city":
     get:
       summary: Retrieve all cities
@@ -103,7 +11,7 @@ paths:
       - City
       responses:
         '200':
-          description: Cities found
+          description: City found
           content:
             application/json:
               schema:
@@ -124,7 +32,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: Error creating Cities
+          description: Error creating location
           content:
             application/json:
               schema:
@@ -152,7 +60,7 @@ paths:
     get:
       summary: Retrieve all homes
       tags:
-      - Home
+      - Homes
       responses:
         '200':
           description: Homes found
@@ -181,7 +89,7 @@ paths:
     post:
       summary: Create a homes
       tags:
-      - Home
+      - Homes
       parameters: []
       responses:
         '200':
@@ -211,6 +119,8 @@ paths:
             schema:
               type: object
               properties:
+                id:
+                  type: integer
                 name:
                   type: string
                 price:
@@ -220,6 +130,7 @@ paths:
                 description:
                   type: string
               required:
+              - id
               - name
               - price
               - image
@@ -234,10 +145,10 @@ paths:
     get:
       summary: Retrieve a home
       tags:
-      - Home
+      - Homes
       responses:
         '200':
-          description: Home found
+          description: Homes found
           content:
             application/json:
               schema:
@@ -260,7 +171,7 @@ paths:
                 - image
                 - description
         '404':
-          description: home not found
+          description: Homes not found
           content:
             application/json:
               schema:
@@ -271,14 +182,14 @@ paths:
                 required:
                 - error
     delete:
-      summary: Delete a homes
+      summary: Delete a service
       tags:
-      - Home
+      - Homes
       responses:
         '204':
           description: Homes deleted
         '404':
-          description: homes not found
+          description: Service not found
           content:
             application/json:
               schema:
@@ -306,8 +217,6 @@ paths:
                       type: integer
                     city_id:
                       type: integer
-                    user_id:
-                      type: integer
                     home_id:
                       type: integer
                     start_date:
@@ -319,7 +228,6 @@ paths:
                   required:
                   - id
                   - city_id
-                  - user_id
                   - home_id
                   - start_date
                   - end_date
@@ -340,8 +248,6 @@ paths:
                     type: integer
                   city_id:
                     type: integer
-                  user_id:
-                    type: integer
                   home_id:
                     type: integer
                   start_date:
@@ -360,9 +266,9 @@ paths:
             schema:
               type: object
               properties:
-                city_id:
+                id:
                   type: integer
-                user_id:
+                city_id:
                   type: integer
                 home_id:
                   type: integer
@@ -373,8 +279,8 @@ paths:
                   type: string
                   format: date-time
               required:
+              - id
               - city_id
-              - user_id
               - home_id
               - start_date
               - end_date
@@ -401,8 +307,6 @@ paths:
                     type: integer
                   city_id:
                     type: integer
-                  user_id:
-                    type: integer
                   home_id:
                     type: integer
                   start_date:
@@ -414,7 +318,6 @@ paths:
                 required:
                 - id
                 - city_id
-                - user_id
                 - home_id
                 - start_date
                 - end_date
@@ -469,19 +372,16 @@ paths:
                   properties:
                     id:
                       type: integer
-                    full_name:
+                    username:
                       type: string
                     email:
                       type: string
-                    role:
-                      type: string
                   required:
                   - id
-                  - full_name
+                  - username
                   - email
-                  - role
 servers:
-- url: https://{defaultHost}
+- url: http://{defaultHost}
   variables:
     defaultHost:
       default: localhost:3000

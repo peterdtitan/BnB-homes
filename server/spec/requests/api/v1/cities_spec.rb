@@ -1,10 +1,11 @@
+require 'swagger_helper'
 
 RSpec.describe Api::V1::CityController, type: :request do
   path '/api/v1/city' do
     get 'Retrieve all cities' do
       tags 'City'
       produces 'application/json'
-      response '200', 'Cities found' do
+      response '200', 'City found' do
         schema type: :array,
                items: {
                  properties: {
@@ -38,7 +39,7 @@ RSpec.describe Api::V1::CityController, type: :request do
       tags 'City'
       consumes 'application/json'
       produces 'application/json'
-      parameter name: :city, in: :body, schema: {
+      parameter name: :cities, in: :body, schema: {
         type: :object,
         properties: {
           name: { type: :string }
@@ -46,7 +47,7 @@ RSpec.describe Api::V1::CityController, type: :request do
         required: ['name']
       }
 
-      response '200', 'city created' do
+      response '200', 'City created' do
         schema type: :object,
                properties: {
                  id: { type: :integer },
@@ -54,33 +55,33 @@ RSpec.describe Api::V1::CityController, type: :request do
                },
                required: %w[id name]
 
-        let(:city) { { name: 'New City' } }
+        let(:cities) { { name: 'New city' } }
 
         run_test! do
           # Make a request to create a location
-          post '/api/v1/city', params: { city: }
+          post '/api/v1/city', params: { cities: }
 
           # Assert the response status code
           expect(response).to have_http_status(:ok)
 
           # Assert the response body against the defined schema
-          created_city = JSON.parse(response.body)
-          expect(created_city).to include('id', 'name')
+          created_cities = JSON.parse(response.body)
+          expect(created_cities).to include('id', 'name')
         end
       end
 
-      response '200', 'Error creating Cities' do
+      response '200', 'Error creating location' do
         schema type: :object,
                properties: {
                  error: { type: :string }
                },
                required: ['error']
 
-        let(:city) { { name: nil } }
+        let(:cities) { { name: nil } }
 
         run_test! do
           # Make a request to create a location with invalid data
-          post '/api/v1/city', params: { city: }
+          post '/api/v1/locations', params: { cities: }
 
           # Assert the response status code
           expect(response).to have_http_status(:ok)

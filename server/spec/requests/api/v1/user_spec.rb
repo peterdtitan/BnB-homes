@@ -10,17 +10,16 @@ RSpec.describe Api::V1::UsersController, type: :request do
                items: {
                  properties: {
                    id: { type: :integer },
-                   full_name: { type: :string },
-                   email: { type: :string },
-                   role: { type: :string }
+                   username: { type: :string },
+                   email: { type: :string }
                  },
-                 required: %w[id full_name email role]
+                 required: %w[id username email]
                }
 
         run_test! do
           # Create some sample users for testing
-          User.create!(full_name: 'John Doe', email: 'john@example.com', role: 'admin')
-          User.create!(full_name: 'Jane Smith', email: 'jane@example.com', role: 'user')
+          User.create!(username: 'John Doe', email: 'john@example.com')
+          User.create!(username: 'Jane Smith', email: 'jane@example.com')
 
           # Make a request to the '/api/v1/users' endpoint
           get '/api/v1/users'
@@ -32,7 +31,7 @@ RSpec.describe Api::V1::UsersController, type: :request do
           users = JSON.parse(response.body)
           expect(users).to be_an(Array)
           expect(users.length).to eq(2)
-          expect(users[0]).to include('id', 'full_name', 'email', 'role')
+          expect(users[0]).to include('id', 'username', 'email')
         end
       end
     end

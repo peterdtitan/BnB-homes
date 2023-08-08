@@ -77,3 +77,5 @@ end
 gem 'rack-cors'
 gem 'devise-jwt'
 gem 'rswag'
+gem 'swagger-blocks'
+gem 'swagger_ui_engine'
