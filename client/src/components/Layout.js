@@ -110,6 +110,7 @@ export default function Layout({ children }) {
               <Link
                 to="/Home"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                onClick={() => toggleSidebar()}
               >
                 <HiHomeModern className="text-gray-300" size={25} />
                 <span className="ml-3">Homes</span>
@@ -119,6 +120,7 @@ export default function Layout({ children }) {
               <Link
                 to="/Reservations"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                onClick={() => toggleSidebar()}
               >
                 <RiReservedFill className="text-gray-300" size={25} />
                 <span className="flex-1 ml-3 whitespace-nowrap">
@@ -133,6 +135,7 @@ export default function Layout({ children }) {
               <Link
                 to="/AddHome"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                onClick={() => toggleSidebar()}
               >
                 <RiFileList3Fill className="text-gray-300" size={25} />
                 <span className="flex-1 ml-3 whitespace-nowrap">
@@ -145,6 +148,7 @@ export default function Layout({ children }) {
               <Link
                 to="RemoveHome"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                onClick={() => toggleSidebar()}
               >
                 <HiDocumentRemove className="text-gray-300" size={25} />
                 <span className="flex-1 ml-3 whitespace-nowrap">
