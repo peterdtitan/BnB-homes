@@ -27,7 +27,7 @@
 
 <!-- PROJECT DESCRIPTION -->
 
-# 📖 BnB-homes-Backend <a name="about-project"></a> <a name="about-project"></a>
+# 📖 [BnB-homes-Backend](https://github.com/peterdtitan/BnB-homes/tree/dev/server) <a name="about-project"></a> <a name="about-project"></a>
 
 **BnB-homes Backend** is a Rails project which gives the API for the BnB-homes Frontend.
 
@@ -134,7 +134,7 @@ rspec ./spec/models
 
 
 
-# 📖 BnB-homes Front-End <a name="about-project"></a> <a name="about-project"></a>
+# 📖 [BnB-homes Front-End](https://github.com/peterdtitan/BnB-homes/tree/dev/server) <a name="about-project"></a> <a name="about-project"></a>
 
 <b>BnB-homes</b> is a website where users can book a homes, cancel a booking. The user can also see the details of a homes.
 
