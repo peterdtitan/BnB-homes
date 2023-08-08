@@ -254,21 +254,17 @@ To run tests, run the following command:
 👤 **Peter Okorafor**
 
 - GitHub: [@peterdtitan](https://github.com/peterdtitan)
-- Twitter: [@PeterDeTitan](https://twitter.com/PeterDeTitan)
-- LinkedIn: [Peter OKorafor](https://linkedin.com/in/peterokorafor)
-- 
+- LinkedIn: [@Peter OKorafor](https://linkedin.com/in/peterokorafor)
 
 👤 **Rishi Mishra**
 
-- GitHub: [Rishi Mishra]( https://github.com/Rishi-Mishra0704)
-- Twitter: [Rishi Mishra](https://twitter.com/RishiMi31357764)
-- LinkedIn: [Rishi Mishra](https://www.linkedin.com/in/rishi-mishra-756718257/)
+- GitHub: [@Rishi Mishra]( https://github.com/Rishi-Mishra0704)
+- LinkedIn: [@Rishi Mishra](https://www.linkedin.com/in/rishi-mishra-756718257/)
 
 
 👤 **Santosh Konappanavar**
 
 - GitHub: [@Santosh-Konappanavar](https://github.com/Santosh-Konappanavar/Portfolio-mobile-setup)
-- Twitter: [@SantoshKonapp1](https://twitter.com/SantoshKonappa1)
 - LinkedIn: [@Santosh Konappanavar](https://www.linkedin.com/in/santosh-konappanavar/)
 
 
