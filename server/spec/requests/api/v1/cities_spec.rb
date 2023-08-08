@@ -39,7 +39,7 @@ RSpec.describe Api::V1::CityController, type: :request do
       tags 'City'
       consumes 'application/json'
       produces 'application/json'
-      parameter name: :cities, in: :body, schema: {
+      parameter name: :city, in: :body, schema: {
         type: :object,
         properties: {
           name: { type: :string }
@@ -47,7 +47,7 @@ RSpec.describe Api::V1::CityController, type: :request do
         required: ['name']
       }
 
-      response '200', 'City created' do
+      response '201', 'City created' do
         schema type: :object,
                properties: {
                  id: { type: :integer },
@@ -55,14 +55,14 @@ RSpec.describe Api::V1::CityController, type: :request do
                },
                required: %w[id name]
 
-        let(:cities) { { name: 'New city' } }
+        let(:city) { { name: 'New city' } }
 
         run_test! do
           # Make a request to create a location
-          post '/api/v1/city', params: { cities: }
+          post '/api/v1/city', params: { city: }
 
           # Assert the response status code
-          expect(response).to have_http_status(:ok)
+          expect(response).to have_http_status(:created)
 
           # Assert the response body against the defined schema
           created_cities = JSON.parse(response.body)
@@ -70,21 +70,21 @@ RSpec.describe Api::V1::CityController, type: :request do
         end
       end
 
-      response '200', 'Error creating location' do
+      response '422', 'Error creating location' do
         schema type: :object,
                properties: {
                  error: { type: :string }
                },
                required: ['error']
 
-        let(:cities) { { name: nil } }
+        let(:city) { { name: nil } }
 
         run_test! do
           # Make a request to create a location with invalid data
-          post '/api/v1/locations', params: { cities: }
+          post '/api/v1/city', params: { city: }
 
           # Assert the response status code
-          expect(response).to have_http_status(:ok)
+          expect(response).to have_http_status(422)
 
           # Assert the response body against the defined schema
           error_response = JSON.parse(response.body)
