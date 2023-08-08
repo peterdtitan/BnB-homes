@@ -5,18 +5,26 @@ class Api::V1::HomesController < ApplicationController
   end
 
   def show
-    @home = Home.find(params[:id])
-    render json: @home
+    @home = Home.find_by(id: params[:id])
+  
+    if @home
+      render json: @home
+    else
+      render json: {
+        error: 'Home not found'
+      }, status: :not_found
+    end
   end
+  
 
   def create
     @home = Home.new(home_params)
     if @home.save
-      render json: @home, status: 200
+      render json: @home, status: :created
     else
       render json: {
         error: 'Error creating home ...'
-      }
+      }, status: :unprocessable_entity
     end
   end
 
