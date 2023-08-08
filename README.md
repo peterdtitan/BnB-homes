@@ -131,6 +131,122 @@ rspec ./spec/models
 - The open [API Documentation](https://localhost:3000/api-docs) in your browser.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+# 📖 BnB-homes Front-End <a name="about-project"></a> <a name="about-project"></a>
+
+<b>BnB-homes</b> is a website where users can book a homes, cancel a booking. The user can also see the details of a homes.
+
+## 🛠 Built With <a name="built-with"></a>
+
+### Tech Stack <a name="tech-stack"></a>
+
+
+<details>
+  <summary>Client</summary>
+  <ul>
+    <li><a href="https://reactjs.org/">React.js</a></li>
+    <li>Redux</li>
+    <li>CSS</li>
+  </ul>
+</details>
+
+<!-- GETTING STARTED -->
+
+## 💻 Getting Started <a name="getting-started"></a>
+
+
+To get a local copy up and running, follow these steps.
+
+### Prerequisites
+
+In order to run this project you need:
+- [x] A web browser like Google Chrome.
+- [x] A code editor like Visual Studio Code with Git and Node.js.
+
+You can check if Git is installed by running the following command in the terminal.
+```
+$ git --version
+```
+
+Likewise for Node.js and npm for package installation.
+```
+$ node --version && npm --version
+```
+### Setup
+
+Clone this repository using the GitHub link provided below.
+
+
+### Install
+
+In the terminal, go to your file directory and run this command.
+
+```
+$ git clone https://github.com/peterdtitan/BnB-homes.git
+```
+
+- Navigate into the cloned folder
+
+```sh
+cd client
+```
+
+```bash
+
+$ npm install
+```
+
+### Usage
+
+
+Kindly modify the files as needed.
+
+In the project directory, you can run:
+```
+$ npm start
+```
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+The page will reload when you make changes.
+
+You may also see any lint errors in the console.
+
+
+
+### Run tests
+
+To run tests, run the following command:
+
+- To Test:-
+
+```bash
+   npm test
+```
+
+- To check Styelint error:-
+
+```bash
+   npx stylelint "\*_/_.{css,scss}"
+```
+
+- To check Eslint error:-
+
+```bash
+   npx eslint "**/*.{js,jsx}"
+```
+
+- To check webhint error:-
+
+```bash
+  npx hint .
+```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
 <!-- AUTHORS -->
 
 ## 👥 Authors <a name="authors"></a>
