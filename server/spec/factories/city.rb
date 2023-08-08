@@ -1,6 +1,5 @@
 FactoryBot.define do
-    factory :city do
-      name { Faker::Address.city }
-    end
+  factory :city do
+    name { Faker::Address.city }
   end
-  
+end

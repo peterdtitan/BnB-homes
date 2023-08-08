@@ -1,22 +1,57 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { HiHomeModern } from 'react-icons/hi2'
-import { HiDocumentRemove } from 'react-icons/hi'
-import { RiReservedFill, RiFileList3Fill } from 'react-icons/ri'
-import { clearUser } from '../redux/user/userSlice'
-import { useDispatch, useSelector } from "react-redux";
+import { HiHomeModern } from "react-icons/hi2";
+import { HiDocumentRemove } from "react-icons/hi";
+import { RiReservedFill, RiFileList3Fill } from "react-icons/ri";
+import { clearUser } from "../redux/user/userSlice";
+import { useDispatch } from "react-redux";
+import "./Layout.css";
 
 export default function Layout({ children }) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const handleLogout = () => {
     dispatch(clearUser());
+    setIsSidebarOpen(false);
     window.location.reload();
   };
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
+  };
+
+  // outside click
+
+  // useEffect(() => {
+  //   if (isSidebarOpen) {
+  //     const handleOutsideClick = (event) => {
+  //       if (
+  //         isSidebarOpen &&
+  //         !event.target.closest("#sidebar-multi-level-sidebar")
+  //       ) {
+  //         closeSidebar();
+  //       }
+  //     };
+
+  //     window.addEventListener("click", handleOutsideClick);
+
+  //     return () => {
+  //       window.removeEventListener("click", handleOutsideClick);
+  //     };
+  //   }
+  // }, [isSidebarOpen]);
+
+  //end outside click
 
   return (
     <div>
       <button
+        onClick={toggleSidebar}
         data-drawer-target="sidebar-multi-level-sidebar"
         data-drawer-toggle="sidebar-multi-level-sidebar"
         aria-controls="sidebar-multi-level-sidebar"
@@ -41,9 +76,30 @@ export default function Layout({ children }) {
 
       <aside
         id="sidebar-multi-level-sidebar"
-        className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+        className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } sm:translate-x-0`}
         aria-label="Sidebar"
       >
+        <button
+          onClick={closeSidebar}
+          className="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
+        >
+          <svg
+            className="w-5 h-5"
+            aria-hidden="true"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              clipRule="evenodd"
+              fillRule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1.414-1.414a6 6 0 110-8.485L9.9 9.899 6.414 6.414a1 1 0 011.414-1.414L11 8.172l3.486-3.486a1 1 0 111.414 1.414L12.414 9.9l3.486 3.486a1 1 0 01-1.414 1.414L11 11.628l-3.486 3.486z"
+            ></path>
+          </svg>
+        </button>
+
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800 flex flex-col items-center justify-evenly">
           <div className="h-16 p-2 bg-red-400">
             <h1 className="text-4xl font-bold tracking-widest">BnB</h1>
@@ -54,6 +110,7 @@ export default function Layout({ children }) {
               <Link
                 to="/Home"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                onClick={() => toggleSidebar()}
               >
                 <HiHomeModern className="text-gray-300" size={25} />
                 <span className="ml-3">Homes</span>
@@ -63,8 +120,9 @@ export default function Layout({ children }) {
               <Link
                 to="/Reservations"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                onClick={() => toggleSidebar()}
               >
-                <RiReservedFill className="text-gray-300" size={25}/>
+                <RiReservedFill className="text-gray-300" size={25} />
                 <span className="flex-1 ml-3 whitespace-nowrap">
                   My Reservations
                 </span>
@@ -77,6 +135,7 @@ export default function Layout({ children }) {
               <Link
                 to="/AddHome"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                onClick={() => toggleSidebar()}
               >
                 <RiFileList3Fill className="text-gray-300" size={25} />
                 <span className="flex-1 ml-3 whitespace-nowrap">
@@ -89,6 +148,7 @@ export default function Layout({ children }) {
               <Link
                 to="RemoveHome"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                onClick={() => toggleSidebar()}
               >
                 <HiDocumentRemove className="text-gray-300" size={25} />
                 <span className="flex-1 ml-3 whitespace-nowrap">
@@ -98,26 +158,7 @@ export default function Layout({ children }) {
             </li>
 
             <li>
-              <a
-                href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <svg
-                  className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 20 18"
-                >
-                  <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
-                </svg>
-                <span className="flex-1 ml-3 whitespace-nowrap">User</span>
-              </a>
-            </li>
-            <li>
-              <p
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
+              <p className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                   aria-hidden="true"
@@ -133,7 +174,12 @@ export default function Layout({ children }) {
                     d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
                   />
                 </svg>
-                <button onClick={handleLogout} className="flex-1 -ml-12 whitespace-nowrap">Sign Out</button>
+                <button
+                  onClick={handleLogout}
+                  className="flex-1 -ml-12 whitespace-nowrap"
+                >
+                  Sign Out
+                </button>
               </p>
             </li>
           </ul>
@@ -145,8 +191,7 @@ export default function Layout({ children }) {
           </div>
         </div>
       </aside>
-
-    <div className="p-4 sm:ml-64">{children}</div>
+      <div className="p-4 sm:ml-64">{children}</div>
     </div>
   );
 }

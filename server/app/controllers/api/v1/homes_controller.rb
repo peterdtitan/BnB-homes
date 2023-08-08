@@ -29,6 +29,6 @@ class Api::V1::HomesController < ApplicationController
   private
 
   def home_params
-    params.require(:home).permit(:name, :price , :description, :image)
+    params.require(:home).permit(:name, :price, :description, :image)
   end
 end

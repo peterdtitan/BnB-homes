@@ -1,0 +1,21 @@
+/* Add transitions for smooth opening and closing */
+.translate-x-0 {
+  transform: translateX(0);
+}
+
+.-translate-x-full {
+  transform: translateX(-100%);
+}
+
+/* Add transitions to the sidebar elements */
+#sidebar-multi-level-sidebar {
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Disable transitions for larger screens */
+@media (min-width: 640px) {
+  #sidebar-multi-level-sidebar {
+    transition: none;
+    transform: translateX(0);
+  }
+}

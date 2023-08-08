@@ -5,7 +5,7 @@ class CreateHomes < ActiveRecord::Migration[7.0]
       t.float :price
       t.string :image
       t.string :description
-      
+
       t.timestamps
     end
   end

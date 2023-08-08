@@ -56,14 +56,14 @@ RSpec.describe Api::V1::HomesController, type: :request do
 
       response '200', 'Homes created' do
         schema type: :object,
-        properties: {
-          id: { type: :integer },
-          name: { type: :string },
-          price: { type: :number },
-          image: { type: :string },
-          description: { type: :string }
-        },
-        required: %w[id name price image description]
+               properties: {
+                 id: { type: :integer },
+                 name: { type: :string },
+                 price: { type: :number },
+                 image: { type: :string },
+                 description: { type: :string }
+               },
+               required: %w[id name price image description]
 
         let(:homes) do
           {
@@ -119,14 +119,14 @@ RSpec.describe Api::V1::HomesController, type: :request do
       produces 'application/json'
       response '200', 'Homes found' do
         schema type: :object,
-        properties: {
-          id: { type: :integer },
-          name: { type: :string },
-          price: { type: :number },
-          image: { type: :string },
-          description: { type: :string }
-        },
-        required: %w[id name price image description]
+               properties: {
+                 id: { type: :integer },
+                 name: { type: :string },
+                 price: { type: :number },
+                 image: { type: :string },
+                 description: { type: :string }
+               },
+               required: %w[id name price image description]
 
         let(:id) do
           Home.create(name: 'Home 1', price: 10.0, image: 'image1.jpg', description: 'description 1').id
@@ -174,7 +174,7 @@ RSpec.describe Api::V1::HomesController, type: :request do
       response '204', 'Homes deleted' do
         let(:id) do
           Home.create(name: 'Home 1', price: 10.0, image: 'image1.jpg', description: 'description 1', duration: 60,
-                         rating: 4.5).id
+                      rating: 4.5).id
         end
 
         run_test! do

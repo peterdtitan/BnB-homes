@@ -5,12 +5,12 @@ class Api::V1::CityController < ApplicationController
     render json: @cities
   end
 
-  def create 
+  def create
     @city = City.new(city_params)
     if @city.save
       render json: @city, status: :created
     else
-      render json: { error: "Error creating city ..." }, status: :unprocessable_entity
+      render json: { error: 'Error creating city ...' }, status: :unprocessable_entity
     end
   end
 
