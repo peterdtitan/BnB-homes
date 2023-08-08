@@ -40,7 +40,6 @@
       end_date: Date.today + (n + 7).days,
       city_id: cities.sample.id,
       home_id: homes.sample.id,
-      user_id: users.sample.id
     )
   end
   

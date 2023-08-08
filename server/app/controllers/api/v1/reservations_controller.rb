@@ -10,6 +10,7 @@ class Api::V1::ReservationsController < ApplicationController
   end
 
   def create
+    puts "Received parameters: #{params.inspect}"
     @reservation = Reservation.new(reservation_params)
     if @reservation.save
       render json: @reservation, status: 200
@@ -29,6 +30,6 @@ class Api::V1::ReservationsController < ApplicationController
   private
 
   def reservation_params
-    params.require(:reservation).permit(:start_date, :end_date, :city_id, :home_id, :user_id)
+    params.require(:reservation).permit(:start_date, :end_date, :city_id, :home_id)
   end
 end

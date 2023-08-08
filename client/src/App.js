@@ -1,24 +1,62 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { fetchAllHomes } from "./redux/homesSlice";
+import { useDispatch, useSelector } from "react-redux";
+import Layout from "./components/Layout";
+import Home from "./components/Home";
+import Reserve from "./components/Reserve";
+import Reservations from "./components/Reservations";
+import AddHome from "./components/AddHome";
+import RemoveHome from "./components/RemoveHome";
+import HomeDetails from "./components/HomeDetails";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Splash from './components/Splash';
 
 function App() {
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(fetchAllHomes());
+  }, [dispatch]);
+
+  const user = useSelector((state) => state.user.user);
+
+  const isAuthPage = location.pathname === "/Login" || location.pathname === "/Register";
+
+  useEffect(() => {
+    if (!user && !isAuthPage) {
+      navigate('/Splash');
+    }
+  }, [user, isAuthPage, navigate]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div className="content">
+        <Routes>
+          <Route path="/Login" element={<Login />} />
+          <Route path="/Register" element={<Register />} />
+        </Routes>
+
+        {user ? (
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/Home" element={<Home />} />
+              <Route path="/Home/:homeId" element={<HomeDetails />} />
+              <Route path="/Home/:homeId/Reserve" element={<Reserve />} />
+              <Route path="/Reservations" element={<Reservations />} />
+              <Route path="/AddHome" element={<AddHome />} />
+              <Route path="/RemoveHome" element={<RemoveHome />} />
+            </Routes>
+          </Layout>
+        ) : (
+          <Routes>
+            <Route path="/Splash" element={<Splash />} />
+          </Routes>
+        )}
+      </div>
   );
 }
 

@@ -16,9 +16,4 @@ RSpec.describe User, type: :model do
     it { should validate_length_of(:password).is_at_least(6) }
   end
 
-  describe "associations" do
-    it { should have_many(:reservations) }
-  end
-
-  # You can add more tests for Devise modules if needed, such as confirmable, lockable, etc.
 end
