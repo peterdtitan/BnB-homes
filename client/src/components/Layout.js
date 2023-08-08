@@ -27,20 +27,23 @@ export default function Layout({ children }) {
 
   // outside click
 
-  // const handleOutsideClick = (event) => {
-  //   if (
-  //     isSidebarOpen &&
-  //     !event.target.closest("#sidebar-multi-level-sidebar")
-  //   ) {
-  //     closeSidebar();
-  //   }
-  // };
-
   // useEffect(() => {
-  //   window.addEventListener("click", handleOutsideClick);
-  //   return () => {
-  //     window.removeEventListener("click", handleOutsideClick);
-  //   };
+  //   if (isSidebarOpen) {
+  //     const handleOutsideClick = (event) => {
+  //       if (
+  //         isSidebarOpen &&
+  //         !event.target.closest("#sidebar-multi-level-sidebar")
+  //       ) {
+  //         closeSidebar();
+  //       }
+  //     };
+
+  //     window.addEventListener("click", handleOutsideClick);
+
+  //     return () => {
+  //       window.removeEventListener("click", handleOutsideClick);
+  //     };
+  //   }
   // }, [isSidebarOpen]);
 
   //end outside click
@@ -75,7 +78,7 @@ export default function Layout({ children }) {
         id="sidebar-multi-level-sidebar"
         className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        } sm:translate-x-0`}
         aria-label="Sidebar"
       >
         <button
@@ -184,7 +187,6 @@ export default function Layout({ children }) {
           </div>
         </div>
       </aside>
-
       <div className="p-4 sm:ml-64">{children}</div>
     </div>
   );

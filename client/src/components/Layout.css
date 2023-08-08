@@ -11,3 +11,11 @@
 #sidebar-multi-level-sidebar {
   transition: transform 0.3s ease-in-out;
 }
+
+/* Disable transitions for larger screens */
+@media (min-width: 640px) {
+  #sidebar-multi-level-sidebar {
+    transition: none;
+    transform: translateX(0);
+  }
+}
