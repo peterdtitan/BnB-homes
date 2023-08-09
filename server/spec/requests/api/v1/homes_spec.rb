@@ -20,8 +20,8 @@ RSpec.describe Api::V1::HomesController, type: :request do
 
         run_test! do
           # Create some sample services for testing
-          Home.create!(name: 'Home 1', price: 10.0, image: 'image1.jpg', description: 'description 1')
-          Home.create!(name: 'Home 2', price: 15.0, image: 'image2.jpg', description: 'description 2')
+          Home.create!(id: 2, name: 'Home 1', price: 10, image: 'image1.jpg', description: 'description 1')
+          Home.create!(id: 3, name: 'Home 2', price: 15, image: 'image2.jpg', description: 'description 2')
 
           # Make a request to retrieve all services
           get '/api/v1/homes'
@@ -42,7 +42,7 @@ RSpec.describe Api::V1::HomesController, type: :request do
       tags 'Homes'
       consumes 'application/json'
       produces 'application/json'
-      parameter name: :homes, in: :body, schema: {
+      parameter name: :home, in: :body, schema: {
         type: :object,
         properties: {
           id: { type: :integer },
@@ -54,7 +54,7 @@ RSpec.describe Api::V1::HomesController, type: :request do
         required: %w[id name price image description]
       }
 
-      response '200', 'Homes created' do
+      response '201', 'Home created' do
         schema type: :object,
                properties: {
                  id: { type: :integer },
@@ -65,10 +65,11 @@ RSpec.describe Api::V1::HomesController, type: :request do
                },
                required: %w[id name price image description]
 
-        let(:homes) do
+        let(:home) do
           {
+            id: 1,
             name: 'New home',
-            price: 20.0,
+            price: 20,
             image: 'new_image.jpg',
             description: 'New Service Details'
           }
@@ -76,10 +77,10 @@ RSpec.describe Api::V1::HomesController, type: :request do
 
         run_test! do
           # Make a request to create a service
-          post '/api/v1/homes', params: { homes: }
+          post '/api/v1/homes', params: { home: home }
 
           # Assert the response status code
-          expect(response).to have_http_status(:ok)
+          expect(response).to have_http_status(:created)
 
           # Assert the response body against the defined schema
           created_home = JSON.parse(response.body)
@@ -87,21 +88,21 @@ RSpec.describe Api::V1::HomesController, type: :request do
         end
       end
 
-      response '200', 'Error creating home' do
+      response '422', 'Error creating home' do
         schema type: :object,
                properties: {
                  error: { type: :string }
                },
                required: ['error']
 
-        let(:homes) { { name: 'Invalid Service', price: 'invalid' } }
+        let(:home) { { name: 'Invalid Service', price: 'invalid' } }  # Fix the param name
 
         run_test! do
-          # Make a request to create a service with invalid data
-          post '/api/v1/homes', params: { homes: }
+          # Make a request to create a home with invalid data
+          post '/api/v1/homes', params: { home: home }  # Provide correct params
 
           # Assert the response status code
-          expect(response).to have_http_status(:ok)
+          expect(response).to have_http_status(422)
 
           # Assert the response body against the defined schema
           error_response = JSON.parse(response.body)
@@ -129,7 +130,7 @@ RSpec.describe Api::V1::HomesController, type: :request do
                required: %w[id name price image description]
 
         let(:id) do
-          Home.create(name: 'Home 1', price: 10.0, image: 'image1.jpg', description: 'description 1').id
+          Home.create(name: 'Home 1', price: 10, image: 'image1.jpg', description: 'description 1').id
         end
 
         run_test! do
@@ -168,13 +169,12 @@ RSpec.describe Api::V1::HomesController, type: :request do
       end
     end
 
-    delete 'Delete a service' do
+    delete 'Delete a home' do
       tags 'Homes'
       produces 'application/json'
       response '204', 'Homes deleted' do
         let(:id) do
-          Home.create(name: 'Home 1', price: 10.0, image: 'image1.jpg', description: 'description 1', duration: 60,
-                      rating: 4.5).id
+          Home.create(name: 'Home 1', price: 10, image: 'image1.jpg', description: 'description 1').id
         end
 
         run_test! do
@@ -182,14 +182,14 @@ RSpec.describe Api::V1::HomesController, type: :request do
           delete "/api/v1/homes/#{id}"
 
           # Assert the response status code
-          expect(response).to have_http_status(:no_content)
+          expect(response).to have_http_status(204)
 
           # Assert that the service is deleted
           expect(Home.find_by(id:)).to be_nil
         end
       end
 
-      response '404', 'Service not found' do
+      response '404', 'Home not found' do
         schema type: :object,
                properties: {
                  error: { type: :string }
@@ -203,7 +203,7 @@ RSpec.describe Api::V1::HomesController, type: :request do
           delete "/api/v1/homes/#{id}"
 
           # Assert the response status code
-          expect(response).to have_http_status(:not_found)
+          expect(response).to have_http_status(404)
 
           # Assert the response body against the defined schema
           error_response = JSON.parse(response.body)

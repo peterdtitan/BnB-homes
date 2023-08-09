@@ -18,8 +18,8 @@ RSpec.describe Api::V1::UsersController, type: :request do
 
         run_test! do
           # Create some sample users for testing
-          User.create!(username: 'John Doe', email: 'john@example.com')
-          User.create!(username: 'Jane Smith', email: 'jane@example.com')
+          User.create!(username: 'John Doe', email: 'john@example.com', password: 'password')
+          User.create!(username: 'Jane Smith', email: 'jane@example.com' , password: 'password')
 
           # Make a request to the '/api/v1/users' endpoint
           get '/api/v1/users'
