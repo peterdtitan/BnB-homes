@@ -7,7 +7,7 @@ import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { fetchAllHomes } from '../redux/homesSlice';
 
-export default function Home() {
+export const Home = () => {
   const scrollContainerRef = useRef(null);
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
