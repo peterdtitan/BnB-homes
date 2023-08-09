@@ -24,7 +24,6 @@ const AddHome = () => {
     try {
       const homeData = { home: formData };
 
-      // Dispatch the addHome action with the wrapped form data
       await dispatch(addHome(homeData));
 
       // Clear the form after successfully adding the home
