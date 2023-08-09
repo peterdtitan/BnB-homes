@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addHome } from '../redux/homesSlice';
 
-const AddHome = () => {
+function AddHome() {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     name: '',
@@ -122,6 +122,6 @@ const AddHome = () => {
       </div>
     </div>
   );
-};
+}
 
 export default AddHome;
