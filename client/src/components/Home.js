@@ -73,7 +73,9 @@ export default function Home() {
                   className="transform hover:scale-110 transition-all duration-300"
                   key={home.id}
                 >
-                  <Card.Header css={{ position: 'absolute', zIndex: 1, top: 5 }}>
+                  <Card.Header
+                    css={{ position: 'absolute', zIndex: 1, top: 5 }}
+                  >
                     <Col>
                       <Text
                         size={12}
@@ -81,7 +83,9 @@ export default function Home() {
                         transform="uppercase"
                         color="#ffffff"
                       >
-                        <p className="rounded-full w-12 bg-green-300/90 px-2 py-1 text-green-700">New</p>
+                        <p className="rounded-full w-12 bg-green-300/90 px-2 py-1 text-green-700">
+                          New
+                        </p>
                       </Text>
                       <Text h3 color="#fffff">
                         <p className="p-2 bg-black/80 max-w-[60%] mt-2 text-white rounded-lg font-medium">
@@ -107,7 +111,7 @@ export default function Home() {
                       position: 'absolute',
                       bgBlur: '#ffffff',
                       borderTop:
-                          '$borderWeights$light solid rgba(255, 255, 255, 0.2)',
+                        '$borderWeights$light solid rgba(255, 255, 255, 0.2)',
                       bottom: 0,
                       zIndex: 1,
                     }}
@@ -115,10 +119,14 @@ export default function Home() {
                     <Row>
                       <Col>
                         <Text color="#000" size={12}>
-                          <p className="animate-pulse font-semibold px-2 py-1 rounded-md">Holiday season!</p>
+                          <p className="animate-pulse font-semibold px-2 py-1 rounded-md">
+                            Holiday season!
+                          </p>
                         </Text>
                         <Text color="#000" size={12}>
-                          <p className="animate-pulse2 font-medium bg-yellow-200 px-2 py-1 rounded-md">Discounts up to 50%</p>
+                          <p className="animate-pulse2 font-medium bg-yellow-200 px-2 py-1 rounded-md">
+                            Discounts up to 50%
+                          </p>
                         </Text>
                       </Col>
                       <Col>
@@ -141,9 +149,13 @@ export default function Home() {
               </div>
             ))
           ) : (
-
             <div className="w-full">
-              <Spinner label="Primary" color="primary" labelColor="primary" className="text-6xl" />
+              <Spinner
+                label="Primary"
+                color="primary"
+                labelColor="primary"
+                className="text-6xl"
+              />
             </div>
           )}
         </div>
@@ -165,7 +177,7 @@ export default function Home() {
         </button>
         <button
           type="button"
-          className=" bg-gray-600 p-4 -mx-4 rounded-r-full focus:outline-none"
+          className="bg-gray-600 p-4 -mx-4 rounded-r-full focus:outline-none"
           onClick={scrollRight}
         >
           <AiFillCaretRight className="mr-8 text-white" size={20} />

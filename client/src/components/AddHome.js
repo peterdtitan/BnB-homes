@@ -39,12 +39,13 @@ const AddHome = () => {
       throw new Error(error);
     }
   };
-
   return (
     <div className="w-full h-screen flex flex-col items-center justify-evenly px-10 -mt-10">
       <div className="text-center">
         <h1 className="text-4xl font-bold tracking-widest">ADD A NEW HOME</h1>
-        <p className="italic font-thin text-md mt-2">We are glad to have you list with us!</p>
+        <p className="italic font-thin text-md mt-2">
+          We are glad to have you list with us!
+        </p>
       </div>
       <div className="w-[80%] bg-white py-4 px-4 shadow-md rounded-md border-[0.5px]">
         <form onSubmit={handleSubmit}>
