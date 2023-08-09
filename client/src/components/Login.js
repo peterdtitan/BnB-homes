@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import backgroundImage from '../img/login-splash.jpg';
 import { setUser } from '../redux/user/userSlice';
 
-export default function Login() {
+export const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
