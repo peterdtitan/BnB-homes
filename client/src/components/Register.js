@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import backgroundImage from '../img/register-splash.jpg';
 import { setUser } from '../redux/user/userSlice';
 
-export default function Register() {
+export const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 

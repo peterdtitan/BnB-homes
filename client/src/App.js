@@ -12,7 +12,7 @@ import AddHome from './components/AddHome';
 import RemoveHome from './components/RemoveHome';
 import { HomeDetails } from './components/HomeDetails';
 import { Login } from './components/Login';
-import Register from './components/Register';
+import { Register } from './components/Register';
 import Splash from './components/Splash';
 
 const App = () => {
