@@ -19,7 +19,7 @@ export default function Register() {
       localStorage.setItem('user', JSON.stringify({ username, password }));
       navigate('/');
     } else {
-      console.log('Username and password must be at least 8 characters long.');
+      <p>Username and Password must be at least 8 characters long</p>;
     }
   };
 
@@ -50,7 +50,7 @@ export default function Register() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button onClick={(e) => register(e)} className="px-6 py-1 rounded-md bg-green-600 hover:bg-green-900 text-white">Register</button>
+          <button type="button" onClick={(e) => register(e)} className="px-6 py-1 rounded-md bg-green-600 hover:bg-green-900 text-white">Register</button>
         </form>
       </div>
     </div>

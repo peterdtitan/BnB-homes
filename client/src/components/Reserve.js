@@ -13,7 +13,7 @@ export default function Reserve() {
 
   const { homeId } = useParams();
   const homes = useSelector((state) => state.homes.homes);
-  const selectedHome = homes.find((home) => home.id === parseInt(homeId));
+  const selectedHome = homes.find((home) => home.id === parseInt(homeId, 10));
   const cityData = useSelector((state) => state.city.data);
 
   const handleCityChange = (e) => {
@@ -28,7 +28,6 @@ export default function Reserve() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(selectedCity);
     const reservation = {
 
       start_date: startDate,
@@ -36,14 +35,11 @@ export default function Reserve() {
       city_id: selectedCity,
       home_id: homeId,
     };
-    console.log(reservation);
     try {
       await dispatch(addReservations(reservation));
-      console.log('Reservation submitted successfully');
       navigate('/Reservations');
     } catch (error) {
-      console.error('Error submitting reservation:', error);
-      console.log('Response:', error.response);
+      throw new Error(error);
     }
   };
 

@@ -20,7 +20,7 @@ export default function Login() {
       dispatch(setUser(storedUser));
       navigate('/');
     } else {
-      console.log('Incorrect username or password.');
+      <p>Invalid Username or Password</p>;
     }
   };
 
@@ -49,7 +49,7 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button onClick={login} className="px-6 py-1 rounded-md bg-green-600 hover:bg-green-900 text-white">Login</button>
+          <button type="button" onClick={login} className="px-6 py-1 rounded-md bg-green-600 hover:bg-green-900 text-white">Login</button>
         </form>
       </div>
     </div>

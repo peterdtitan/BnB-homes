@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { HiHomeModern } from 'react-icons/hi2';
 import { HiDocumentRemove } from 'react-icons/hi';
 import { RiReservedFill, RiFileList3Fill } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
+import { PropTypes } from 'prop-types';
 import { clearUser } from '../redux/user/userSlice';
 import './Layout.css';
 
@@ -24,29 +25,6 @@ export default function Layout({ children }) {
   const closeSidebar = () => {
     setIsSidebarOpen(false);
   };
-
-  // outside click
-
-  // useEffect(() => {
-  //   if (isSidebarOpen) {
-  //     const handleOutsideClick = (event) => {
-  //       if (
-  //         isSidebarOpen &&
-  //         !event.target.closest("#sidebar-multi-level-sidebar")
-  //       ) {
-  //         closeSidebar();
-  //       }
-  //     };
-
-  //     window.addEventListener("click", handleOutsideClick);
-
-  //     return () => {
-  //       window.removeEventListener("click", handleOutsideClick);
-  //     };
-  //   }
-  // }, [isSidebarOpen]);
-
-  // end outside click
 
   return (
     <div>
@@ -82,6 +60,7 @@ export default function Layout({ children }) {
         aria-label="Sidebar"
       >
         <button
+          type="button"
           onClick={closeSidebar}
           className="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
         >
@@ -175,6 +154,7 @@ export default function Layout({ children }) {
                   />
                 </svg>
                 <button
+                  type="button"
                   onClick={handleLogout}
                   className="flex-1 -ml-12 whitespace-nowrap"
                 >
@@ -195,3 +175,7 @@ export default function Layout({ children }) {
     </div>
   );
 }
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+};

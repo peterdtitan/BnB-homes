@@ -36,8 +36,7 @@ const AddHome = () => {
         description: '',
       });
     } catch (error) {
-      console.error('Error adding home:', error);
-      // Handle error if necessary
+      throw new Error(error);
     }
   };
 

@@ -19,8 +19,7 @@ const RemoveHome = () => {
       // Dispatch the deleteHome action with the homeId
       dispatch(deleteHome(homeId));
     } catch (error) {
-      console.error('Error deleting home:', error);
-      // Handle error if necessary
+      throw new Error(error);
     }
   };
 

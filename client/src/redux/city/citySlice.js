@@ -32,4 +32,10 @@ const citySlice = createSlice({
   },
 });
 
+export const initialState = {
+  data: [],
+  status: 'idle',
+  error: null,
+};
+
 export default citySlice.reducer;
