@@ -29,10 +29,18 @@ class Api::V1::HomesController < ApplicationController
   end
 
   def destroy
-    @home = Home.find(params[:id])
-    @home.destroy
-    head :no_content
+    @home = Home.find_by(id: params[:id])
+  
+    if @home
+      @home.destroy
+      head :no_content
+    else
+      render json: {
+        error: 'Home not found'
+      }, status: :not_found
+    end
   end
+  
 
   private
 
