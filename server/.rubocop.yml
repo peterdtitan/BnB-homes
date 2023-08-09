@@ -27,6 +27,10 @@ Metrics/ClassLength:
 Metrics/BlockLength:
   AllowedMethods: ["describe"]
   Max: 100
+Metrics/CyclomaticComplexity:
+  Max: 10
+Metrics/PerceivedComplexity:
+  Max: 10
 
 Style/Documentation:
   Enabled: false
@@ -35,6 +39,8 @@ Style/ClassAndModuleChildren:
 Style/EachForSimpleLoop:
   Enabled: false
 Style/AndOr:
+  Enabled: false
+Style/IfUnlessModifier:
   Enabled: false
 Style/DefWithParentheses:
   Enabled: false
