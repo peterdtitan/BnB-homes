@@ -2,7 +2,7 @@ class UpdateReservationsTable < ActiveRecord::Migration[7.0]
   def change
     remove_foreign_key :reservations, column: :cities_id
     remove_foreign_key :reservations, column: :homes_id
-    
+
     remove_column :reservations, :cities_id
     remove_column :reservations, :homes_id
 

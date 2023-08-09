@@ -56,14 +56,14 @@ RSpec.describe Api::V1::HomesController, type: :request do
 
       response '201', 'Home created' do
         schema type: :object,
-        properties: {
-          id: { type: :integer },
-          name: { type: :string },
-          price: { type: :number },
-          image: { type: :string },
-          description: { type: :string }
-        },
-        required: %w[id name price image description]
+               properties: {
+                 id: { type: :integer },
+                 name: { type: :string },
+                 price: { type: :number },
+                 image: { type: :string },
+                 description: { type: :string }
+               },
+               required: %w[id name price image description]
 
         let(:home) do
           {
@@ -120,14 +120,14 @@ RSpec.describe Api::V1::HomesController, type: :request do
       produces 'application/json'
       response '200', 'Homes found' do
         schema type: :object,
-        properties: {
-          id: { type: :integer },
-          name: { type: :string },
-          price: { type: :number },
-          image: { type: :string },
-          description: { type: :string }
-        },
-        required: %w[id name price image description]
+               properties: {
+                 id: { type: :integer },
+                 name: { type: :string },
+                 price: { type: :number },
+                 image: { type: :string },
+                 description: { type: :string }
+               },
+               required: %w[id name price image description]
 
         let(:id) do
           Home.create(name: 'Home 1', price: 10, image: 'image1.jpg', description: 'description 1').id

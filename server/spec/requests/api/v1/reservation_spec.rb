@@ -126,14 +126,14 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
 
       response '200', 'Reservation found' do
         schema type: :object,
-        properties: {
-          id: { type: :integer },
-          city_id: { type: :integer },
-          home_id: { type: :integer },
-          start_date: { type: :string, format: 'date-time' },
-          end_date: { type: :string, format: 'date-time' }
-        },
-        required: %w[id city_id home_id start_date end_date]
+               properties: {
+                 id: { type: :integer },
+                 city_id: { type: :integer },
+                 home_id: { type: :integer },
+                 start_date: { type: :string, format: 'date-time' },
+                 end_date: { type: :string, format: 'date-time' }
+               },
+               required: %w[id city_id home_id start_date end_date]
 
         let(:id) do
           Reservation.create(city_id: 1, home_id: 1, start_date: DateTime.now,

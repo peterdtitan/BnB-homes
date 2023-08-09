@@ -69,13 +69,13 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
   gem 'factory_bot_rails'
+  gem 'faker'
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'webdrivers'
-  gem 'faker'
 end
-gem 'rack-cors'
 gem 'devise-jwt'
+gem 'rack-cors'
 gem 'rswag'
 gem 'swagger-blocks'
 gem 'swagger_ui_engine'
