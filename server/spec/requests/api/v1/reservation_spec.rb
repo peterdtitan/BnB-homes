@@ -20,14 +20,14 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
 
         run_test! do
           # Create some sample reservations for testing
-          city = City.create!(name: 'Sample City')  
-          home = Home.create!(name: 'Sample Home', price:100, description: 'Sample Description', image: 'Image.jpg') 
+          city = City.create!(name: 'Sample City')
+          home = Home.create!(name: 'Sample Home', price: 100, description: 'Sample Description', image: 'Image.jpg')
 
-          Reservation.create!(    
-          city_id: city.id,
-          home_id: home.id,
-          start_date: DateTime.now,
-          end_date: DateTime.now + 1.day
+          Reservation.create!(
+            city_id: city.id,
+            home_id: home.id,
+            start_date: DateTime.now,
+            end_date: DateTime.now + 1.day
           )
 
 
@@ -71,19 +71,19 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
                  end_date: { type: :string, format: 'date-time' }
                },
                required: %w[id city_id home_id start_date end_date]
-      
+
         let(:reservation) do
           {
-              city_id: 1,
-              home_id: 1,
-              start_date: DateTime.now,
-              end_date: DateTime.now + 1.day
+            city_id: 1,
+            home_id: 1,
+            start_date: DateTime.now,
+            end_date: DateTime.now + 1.day
           }
         end
-      
+
         run_test! do
           # Make a request to create a reservation
-          post '/api/v1/reservations', params: { reservation: reservation }
+          post '/api/v1/reservations', params: { reservation: }
 
           # Assert the response status code
           expect(response).to have_http_status(201)
@@ -92,7 +92,7 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
           created_reservation = JSON.parse(response.body)
           expect(created_reservation).to include('id', 'city_id', 'home_id', 'start_date', 'end_date')
         end
-      end      
+      end
 
       response '422', 'Error creating reservation' do
         schema type: :object,
@@ -105,7 +105,7 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
 
         run_test! do
           # Make a request to create a reservation with invalid data
-          post '/api/v1/reservations', params: { reservation: reservation }
+          post '/api/v1/reservations', params: { reservation: }
 
           # Assert the response status code
           expect(response).to have_http_status(422)
@@ -195,7 +195,7 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
           expect(response).to have_http_status(204)
 
           # Assert that the reservation is deleted
-          expect(Reservation.find_by(id: id)).to be_nil
+          expect(Reservation.find_by(id:)).to be_nil
         end
       end
 

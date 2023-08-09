@@ -99,7 +99,7 @@ RSpec.describe Api::V1::HomesController, type: :request do
 
         run_test! do
           # Make a request to create a home with invalid data
-          post '/api/v1/homes', params: { home: home } # Provide correct params
+          post '/api/v1/homes', params: { home: } # Provide correct params
 
           # Assert the response status code
           expect(response).to have_http_status(422)
