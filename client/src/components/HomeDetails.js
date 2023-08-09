@@ -5,7 +5,7 @@ import { Tooltip } from '@nextui-org/react';
 import { AiOutlineWifi } from 'react-icons/ai';
 import { BiSolidParking } from 'react-icons/bi';
 
-export default function HomeDetails() {
+export const HomeDetails = () => {
   const { homeId } = useParams();
   const homes = useSelector((state) => state.homes.homes);
   const selectedHome = homes.find((home) => home.id === parseInt(homeId, 10));

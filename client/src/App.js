@@ -10,7 +10,7 @@ import Reserve from './components/Reserve';
 import Reservations from './components/Reservations';
 import AddHome from './components/AddHome';
 import RemoveHome from './components/RemoveHome';
-import HomeDetails from './components/HomeDetails';
+import { HomeDetails } from './components/HomeDetails';
 import Login from './components/Login';
 import Register from './components/Register';
 import Splash from './components/Splash';
