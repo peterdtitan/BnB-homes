@@ -5,7 +5,7 @@ import {
   deleteReservations,
 } from '../redux/ReservationsSlice';
 
-export default function Reservations() {
+export const Reservations = () => {
   const dispatch = useDispatch();
   const reservations = useSelector((state) => state.reservations.reservations);
   const homes = useSelector((state) => state.homes.homes); // Assuming you have a homes reducer
