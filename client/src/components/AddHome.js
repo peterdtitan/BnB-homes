@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addHome } from '../redux/homesSlice';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addHome } from "../redux/homesSlice";
 
 const AddHome = () => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    name: '',
-    price: '',
-    image: '',
-    description: '',
+    name: "",
+    price: "",
+    image: "",
+    description: "",
   });
 
   const handleChange = (e) => {
@@ -22,7 +22,6 @@ const AddHome = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Wrap the form data under the "home" key
       const homeData = { home: formData };
 
       // Dispatch the addHome action with the wrapped form data
@@ -30,10 +29,10 @@ const AddHome = () => {
 
       // Clear the form after successfully adding the home
       setFormData({
-        name: '',
-        price: '',
-        image: '',
-        description: '',
+        name: "",
+        price: "",
+        image: "",
+        description: "",
       });
     } catch (error) {
       throw new Error(error);
@@ -122,6 +121,6 @@ const AddHome = () => {
       </div>
     </div>
   );
-}
+};
 
 export default AddHome;
