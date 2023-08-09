@@ -77,7 +77,7 @@ RSpec.describe Api::V1::HomesController, type: :request do
 
         run_test! do
           # Make a request to create a service
-          post '/api/v1/homes', params: { home: home }
+          post '/api/v1/homes', params: { home: }
 
           # Assert the response status code
           expect(response).to have_http_status(:created)

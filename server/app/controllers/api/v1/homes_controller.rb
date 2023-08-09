@@ -40,7 +40,6 @@ class Api::V1::HomesController < ApplicationController
     end
   end
 
-
   private
 
   def home_params
