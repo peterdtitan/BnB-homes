@@ -15,7 +15,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Splash from './components/Splash';
 
-function App() {
+const App = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
