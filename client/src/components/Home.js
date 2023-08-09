@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from "react";
-import { Card, Col, Row, Button, Text } from "@nextui-org/react";
-import { fetchAllHomes, showSingleHome } from "../redux/homesSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
-import { Spinner } from "@nextui-org/react";
+import React, { useEffect, useRef } from 'react';
+import {
+  Card, Col, Row, Button, Text, 
+, Spinner } from '@nextui-org/react';
+import { fetchAllHomes, showSingleHome } from '../redux/homesSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
   const scrollContainerRef = useRef(null);
@@ -12,7 +13,7 @@ export default function Home() {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
         left: -300,
-        behavior: "smooth",
+        behavior: 'smooth',
       });
     }
   };
@@ -21,7 +22,7 @@ export default function Home() {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({
         left: 300,
-        behavior: "smooth",
+        behavior: 'smooth',
       });
     }
   };
@@ -36,8 +37,8 @@ export default function Home() {
 
   const navigate = useNavigate();
 
-  const handleCardClick= (homeId) =>{
-    navigate(`/Home/${homeId}`); 
+  const handleCardClick = (homeId) => {
+    navigate(`/Home/${homeId}`);
   };
 
   return (
@@ -59,19 +60,19 @@ export default function Home() {
           ref={scrollContainerRef}
           className="flex gap-4 bg-white overflow-x-auto scrollbar-thin scrollbar-thumb-primary scrollbar-track-primary"
         >
-            {homes ? (
-            homes.map((home) => (
-                <div
-              key={home.id}
-              className="min-w-80 h-[500px] flex items-center flex-shrink-0 mx-2"
-              onClick={() => handleCardClick(home.id)}
-            >
+          {homes ? (
+              homes.map((home) => (
+              <div
+                  key={home.id}
+                  className="min-w-80 h-[500px] flex items-center flex-shrink-0 mx-2"
+                  onClick={() => handleCardClick(home.id)}
+                >
                   <Card
-                css={{ w: "100%", h: "300px" }}
-                className="transform hover:scale-110 transition-all duration-300"
-                key={home.id}
-              >
-                    <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
+                    css={{ w: '100%', h: '300px' }}
+                    className="transform hover:scale-110 transition-all duration-300"
+                    key={home.id}
+                  >
+                    <Card.Header css={{ position: 'absolute', zIndex: 1, top: 5 }}>
                       <Col>
                         <Text
                           size={12}
@@ -102,10 +103,10 @@ export default function Home() {
                     <Card.Footer
                       isBlurred
                       css={{
-                        position: "absolute",
-                        bgBlur: "#ffffff",
+                        position: 'absolute',
+                        bgBlur: '#ffffff',
                         borderTop:
-                          "$borderWeights$light solid rgba(255, 255, 255, 0.2)",
+                          '$borderWeights$light solid rgba(255, 255, 255, 0.2)',
                         bottom: 0,
                         zIndex: 1,
                       }}
@@ -123,7 +124,7 @@ export default function Home() {
                           <Row justify="flex-end">
                             <Button flat auto rounded color="primary">
                               <Text
-                                css={{ color: "inherit" }}
+                                css={{ color: 'inherit' }}
                                 size={12}
                                 weight="bold"
                                 transform="uppercase"
@@ -138,12 +139,12 @@ export default function Home() {
                   </Card>
                 </div>
               ))
-          ) : (
+            ) : (
 
             <div className="w-full">
-              <Spinner label="Primary" color="primary" labelColor="primary" className="text-6xl"/>
+              <Spinner label="Primary" color="primary" labelColor="primary" className="text-6xl" />
             </div>
-          )}
+            )}
         </div>
         <button
           className="hidden md:flex bg-gray-600 p-4 -mx-4 rounded-l-full focus:outline-none"

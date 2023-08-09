@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchAllReservations,
   deleteReservations,
-} from "../redux/ReservationsSlice";
+} from '../redux/ReservationsSlice';
 
 export default function Reservations() {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ export default function Reservations() {
 
   const getHomeName = (homeId) => {
     const home = homes.find((home) => home.id === homeId);
-    return home ? home.name : "Unknown Home";
+    return home ? home.name : 'Unknown Home';
   };
 
   return (
@@ -34,18 +34,23 @@ export default function Reservations() {
           >
             <div className="md:flex-grow">
               <p className="md:text-lg font-semibold">
-                Start Date:{" "}
+                Start Date:
+                {' '}
                 <span className="animate-pulse2">{reservation.start_date}</span>
               </p>
               <p className="md:text-lg font-semibold">
-                End Date:{" "}
+                End Date:
+                {' '}
                 <span className="animate-pulse">{reservation.end_date}</span>
               </p>
             </div>
             <p className="md:text-md">
-              Home: <span className="md:font-semibold">{getHomeName(reservation.home_id)}</span>
+              Home:
+              {' '}
+              <span className="md:font-semibold">{getHomeName(reservation.home_id)}</span>
             </p>
             <button
+              type="button"
               className="w-full md:w-auto py-2 px-4 md:text-md md:ml-auto text-red-500 bg-transparent border border-red-500 rounded hover:text-red-700 hover:bg-red-100 transition duration-300"
               onClick={() => handleDelete(reservation.id)}
             >

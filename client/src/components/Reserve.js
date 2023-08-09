@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { addReservations } from "../redux/ReservationsSlice";
-import { fetchCityData } from "../redux/city/citySlice";
-
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { addReservations } from '../redux/ReservationsSlice';
+import { fetchCityData } from '../redux/city/citySlice';
 
 export default function Reserve() {
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [selectedCity, setSelectedCity] = useState("");
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
 
   const navigate = useNavigate();
 
@@ -27,26 +26,24 @@ export default function Reserve() {
     dispatch(fetchCityData());
   }, [dispatch]);
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(selectedCity)
+    console.log(selectedCity);
     const reservation = {
-     
-        start_date: startDate,
-        end_date: endDate,
-        city_id: selectedCity,
-        home_id: homeId,
+
+      start_date: startDate,
+      end_date: endDate,
+      city_id: selectedCity,
+      home_id: homeId,
     };
-    console.log(reservation)
+    console.log(reservation);
     try {
       await dispatch(addReservations(reservation));
-      console.log("Reservation submitted successfully");
-      navigate('/Reservations')
+      console.log('Reservation submitted successfully');
+      navigate('/Reservations');
     } catch (error) {
-      
-      console.error("Error submitting reservation:", error);
-      console.log("Response:", error.response);
+      console.error('Error submitting reservation:', error);
+      console.log('Response:', error.response);
     }
   };
 
@@ -85,7 +82,7 @@ export default function Reserve() {
         />
       </div>
       <div className="mb-4">
-      <label htmlFor="city" className="block font-medium">
+        <label htmlFor="city" className="block font-medium">
           Select City
         </label>
         <select

@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Card, Col, Row, Button, Text } from "@nextui-org/react";
-import { deleteHome, fetchAllHomes } from "../redux/homesSlice";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  Card, Col, Row, Button, Text,
+} from '@nextui-org/react';
+import { deleteHome, fetchAllHomes } from '../redux/homesSlice';
 
 const RemoveHome = () => {
   const dispatch = useDispatch();
@@ -17,7 +19,7 @@ const RemoveHome = () => {
       // Dispatch the deleteHome action with the homeId
       dispatch(deleteHome(homeId));
     } catch (error) {
-      console.error("Error deleting home:", error);
+      console.error('Error deleting home:', error);
       // Handle error if necessary
     }
   };
@@ -33,8 +35,8 @@ const RemoveHome = () => {
       <div className="flex max-w-[85%] bg-white overflow-x-auto scrollbar-thin scrollbar-thumb-primary scrollbar-track-primary">
         {homes.map((home) => (
           <div key={home.id} className="min-w-80 flex-shrink-0 mx-2">
-            <Card css={{ w: "100%", h: "400px" }}>
-              <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
+            <Card css={{ w: '100%', h: '400px' }}>
+              <Card.Header css={{ position: 'absolute', zIndex: 1, top: 5 }}>
                 <Col>
                   <Text
                     size={12}
@@ -63,10 +65,10 @@ const RemoveHome = () => {
               <Card.Footer
                 isBlurred
                 css={{
-                  position: "absolute",
-                  bgBlur: "#ffffff66",
+                  position: 'absolute',
+                  bgBlur: '#ffffff66',
                   borderTop:
-                    "$borderWeights$light solid rgba(255, 255, 255, 0.2)",
+                    '$borderWeights$light solid rgba(255, 255, 255, 0.2)',
                   bottom: 0,
                   zIndex: 1,
                 }}
@@ -90,7 +92,7 @@ const RemoveHome = () => {
                         onClick={() => handleDelete(home.id)}
                       >
                         <Text
-                          css={{ color: "inherit" }}
+                          css={{ color: 'inherit' }}
                           size={12}
                           weight="bold"
                           transform="uppercase"

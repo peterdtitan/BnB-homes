@@ -1,5 +1,4 @@
-import { setUser, clearUser } from '../redux/user/userSlice';
-import userReducer from '../redux/user/userSlice';
+import userReducer, { setUser, clearUser } from '../redux/user/userSlice';
 
 describe('userSlice reducers', () => {
   it('should handle setUser', () => {
