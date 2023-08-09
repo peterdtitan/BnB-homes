@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addHome } from '../redux/homesSlice';
 
-function AddHome() {
+const AddHome = () => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     name: '',
