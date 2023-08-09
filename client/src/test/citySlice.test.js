@@ -2,7 +2,7 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import {
   fetchCityData,
-  initialState as cityInitialState,
+  initialState,
 } from '../redux/city/citySlice';
 
 const middlewares = [thunk];
@@ -11,14 +11,14 @@ const mockStore = configureStore(middlewares);
 describe('citySlice async actions', () => {
   it('should successfully fetch city data', async () => {
     const expectedData = [{ id: 1, name: 'City A' }, { id: 2, name: 'City B' }];
-    
+
     const fetchMock = jest.fn(async () => ({
       json: async () => expectedData,
     }));
-    
+
     global.fetch = fetchMock;
 
-    const store = mockStore({ city: cityInitialState });
+    const store = mockStore({ city: initialState });
 
     await store.dispatch(fetchCityData());
 
@@ -37,7 +37,7 @@ describe('citySlice async actions', () => {
 
     global.fetch = fetchMock;
 
-    const store = mockStore({ city: cityInitialState });
+    const store = mockStore({ city: initialState });
 
     await store.dispatch(fetchCityData());
 

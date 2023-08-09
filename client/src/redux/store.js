@@ -1,9 +1,9 @@
 // store.js
-import { configureStore } from "@reduxjs/toolkit";
-import homesReducer from "./homesSlice";
-import reservationReducer from "./ReservationsSlice";
-import userSlice from "./user/userSlice";
-import cityReducer from "./city/citySlice";
+import { configureStore } from '@reduxjs/toolkit';
+import homesReducer from './homesSlice';
+import reservationReducer from './ReservationsSlice';
+import userSlice from './user/userSlice';
+import cityReducer from './city/citySlice';
 
 const store = configureStore({
   reducer: {

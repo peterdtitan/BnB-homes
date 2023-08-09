@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addHome } from "../redux/homesSlice";
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addHome } from '../redux/homesSlice';
 
 const AddHome = () => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    name: "",
-    price: "",
-    image: "",
-    description: "",
+    name: '',
+    price: '',
+    image: '',
+    description: '',
   });
 
   const handleChange = (e) => {
@@ -30,22 +30,22 @@ const AddHome = () => {
 
       // Clear the form after successfully adding the home
       setFormData({
-        name: "",
-        price: "",
-        image: "",
-        description: "",
+        name: '',
+        price: '',
+        image: '',
+        description: '',
       });
     } catch (error) {
-      console.error("Error adding home:", error);
-      // Handle error if necessary
+      throw new Error(error);
     }
   };
-
   return (
     <div className="w-full h-screen flex flex-col items-center justify-evenly px-10 -mt-10">
       <div className="text-center">
         <h1 className="text-4xl font-bold tracking-widest">ADD A NEW HOME</h1>
-        <p className="italic font-thin text-md mt-2">We are glad to have you list with us!</p>
+        <p className="italic font-thin text-md mt-2">
+          We are glad to have you list with us!
+        </p>
       </div>
       <div className="w-[80%] bg-white py-4 px-4 shadow-md rounded-md border-[0.5px]">
         <form onSubmit={handleSubmit}>

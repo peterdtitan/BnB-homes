@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { HiHomeModern } from "react-icons/hi2";
-import { HiDocumentRemove } from "react-icons/hi";
-import { RiReservedFill, RiFileList3Fill } from "react-icons/ri";
-import { clearUser } from "../redux/user/userSlice";
-import { useDispatch } from "react-redux";
-import "./Layout.css";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { HiHomeModern } from 'react-icons/hi2';
+import { HiDocumentRemove } from 'react-icons/hi';
+import { RiReservedFill, RiFileList3Fill } from 'react-icons/ri';
+import { useDispatch } from 'react-redux';
+import { PropTypes } from 'prop-types';
+import { clearUser } from '../redux/user/userSlice';
+import './Layout.css';
 
 export default function Layout({ children }) {
   const dispatch = useDispatch();
@@ -24,29 +25,6 @@ export default function Layout({ children }) {
   const closeSidebar = () => {
     setIsSidebarOpen(false);
   };
-
-  // outside click
-
-  // useEffect(() => {
-  //   if (isSidebarOpen) {
-  //     const handleOutsideClick = (event) => {
-  //       if (
-  //         isSidebarOpen &&
-  //         !event.target.closest("#sidebar-multi-level-sidebar")
-  //       ) {
-  //         closeSidebar();
-  //       }
-  //     };
-
-  //     window.addEventListener("click", handleOutsideClick);
-
-  //     return () => {
-  //       window.removeEventListener("click", handleOutsideClick);
-  //     };
-  //   }
-  // }, [isSidebarOpen]);
-
-  //end outside click
 
   return (
     <div>
@@ -70,18 +48,19 @@ export default function Layout({ children }) {
             clipRule="evenodd"
             fillRule="evenodd"
             d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-          ></path>
+          />
         </svg>
       </button>
 
       <aside
         id="sidebar-multi-level-sidebar"
         className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } sm:translate-x-0`}
         aria-label="Sidebar"
       >
         <button
+          type="button"
           onClick={closeSidebar}
           className="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
         >
@@ -96,7 +75,7 @@ export default function Layout({ children }) {
               clipRule="evenodd"
               fillRule="evenodd"
               d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1.414-1.414a6 6 0 110-8.485L9.9 9.899 6.414 6.414a1 1 0 011.414-1.414L11 8.172l3.486-3.486a1 1 0 111.414 1.414L12.414 9.9l3.486 3.486a1 1 0 01-1.414 1.414L11 11.628l-3.486 3.486z"
-            ></path>
+            />
           </svg>
         </button>
 
@@ -175,6 +154,7 @@ export default function Layout({ children }) {
                   />
                 </svg>
                 <button
+                  type="button"
                   onClick={handleLogout}
                   className="flex-1 -ml-12 whitespace-nowrap"
                 >
@@ -185,9 +165,9 @@ export default function Layout({ children }) {
           </ul>
 
           <div className="flex items-center justify-between gap-4 mt-auto">
-            <p className="h-8 w-8 bg-red-200 rounded-full"></p>
-            <p className="h-8 w-8 bg-red-200 rounded-full"></p>
-            <p className="h-8 w-8 bg-red-200 rounded-full"></p>
+            <p className="h-8 w-8 bg-red-200 rounded-full" />
+            <p className="h-8 w-8 bg-red-200 rounded-full" />
+            <p className="h-8 w-8 bg-red-200 rounded-full" />
           </div>
         </div>
       </aside>
@@ -195,3 +175,7 @@ export default function Layout({ children }) {
     </div>
   );
 }
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+};
