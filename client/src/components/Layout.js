@@ -8,7 +8,7 @@ import { PropTypes } from 'prop-types';
 import { clearUser } from '../redux/user/userSlice';
 import './Layout.css';
 
-export default function Layout({ children }) {
+export const Layout = ({ children }) => {
   const dispatch = useDispatch();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
