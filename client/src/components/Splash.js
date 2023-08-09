@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import backgroundImage from '../img/splash.png';
 
-export default function Splash() {
+export const Splash = () => {
   const navigate = useNavigate();
 
   return (
