@@ -5,7 +5,7 @@ import {
 } from '@nextui-org/react';
 import { deleteHome, fetchAllHomes } from '../redux/homesSlice';
 
-function RemoveHome() {
+const RemoveHome = () => {
   const dispatch = useDispatch();
   const homes = useSelector((state) => state.homes.homes);
 
