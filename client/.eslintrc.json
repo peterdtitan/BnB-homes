@@ -33,6 +33,5 @@
       "rules": { "no-param-reassign": ["error", { "props": false }] }
     }
   ],
-  "ignorePatterns": ["dist/", "build/"],
-  "requireConfigFile": false
+  "ignorePatterns": ["dist/", "build/"]
 }
