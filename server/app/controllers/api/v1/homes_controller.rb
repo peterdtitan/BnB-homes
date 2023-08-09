@@ -6,7 +6,7 @@ class Api::V1::HomesController < ApplicationController
 
   def show
     @home = Home.find_by(id: params[:id])
-  
+
     if @home
       render json: @home
     else
@@ -15,7 +15,6 @@ class Api::V1::HomesController < ApplicationController
       }, status: :not_found
     end
   end
-  
 
   def create
     @home = Home.new(home_params)
@@ -30,7 +29,7 @@ class Api::V1::HomesController < ApplicationController
 
   def destroy
     @home = Home.find_by(id: params[:id])
-  
+
     if @home
       @home.destroy
       head :no_content
@@ -40,7 +39,7 @@ class Api::V1::HomesController < ApplicationController
       }, status: :not_found
     end
   end
-  
+
 
   private
 

@@ -95,11 +95,11 @@ RSpec.describe Api::V1::HomesController, type: :request do
                },
                required: ['error']
 
-        let(:home) { { name: 'Invalid Service', price: 'invalid' } }  # Fix the param name
+        let(:home) { { name: 'Invalid Service', price: 'invalid' } } # Fix the param name
 
         run_test! do
           # Make a request to create a home with invalid data
-          post '/api/v1/homes', params: { home: home }  # Provide correct params
+          post '/api/v1/homes', params: { home: home } # Provide correct params
 
           # Assert the response status code
           expect(response).to have_http_status(422)
