@@ -30,7 +30,6 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
             end_date: DateTime.now + 1.day
           )
 
-
           # Make a request to retrieve all reservations
           get '/api/v1/reservations'
 
