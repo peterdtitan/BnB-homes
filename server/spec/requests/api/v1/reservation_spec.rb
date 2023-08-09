@@ -71,8 +71,13 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
                  end_date: { type: :string, format: 'date-time' }
                },
                required: %w[id city_id home_id start_date end_date]
+<<<<<<< HEAD
       
         let(:reservation) do
+=======
+
+        let(:reservations) do
+>>>>>>> dev
           {
               city_id: 1,
               home_id: 1,
