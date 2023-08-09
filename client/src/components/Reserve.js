@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addReservations } from '../redux/ReservationsSlice';
 import { fetchCityData } from '../redux/city/citySlice';
 
-export default function Reserve() {
+export const Reserve = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [selectedCity, setSelectedCity] = useState('');

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllHomes } from './redux/homesSlice';
 import { Layout } from './components/Layout';
 import { Home } from './components/Home';
-import Reserve from './components/Reserve';
+import { Reserve } from './components/Reserve';
 import { Reservations } from './components/Reservations';
 import AddHome from './components/AddHome';
 import RemoveHome from './components/RemoveHome';
