@@ -48,13 +48,8 @@
     ]
   },
   "devDependencies": {
-<<<<<<< HEAD
-    "@babel/core": "^7.22.10",
-    "@babel/eslint-parser": "^7.22.10",
-=======
     "@babel/core": "^7.15.0",
     "@babel/eslint-parser": "^7.15.0",
->>>>>>> 8f2be6a04a08e441a20eb16e3b7e72d946ad3452
     "@babel/plugin-syntax-jsx": "^7.22.5",
     "@babel/preset-react": "^7.22.5",
     "babel-jest": "^29.6.2",
