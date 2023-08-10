@@ -8,6 +8,7 @@ import { setUser } from '../redux/user/userSlice';
 export const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ export const Register = () => {
       localStorage.setItem('user', JSON.stringify({ username, password }));
       navigate('/');
     } else {
-      <p>Username and Password must be at least 8 characters long</p>;
+      setErrorMessage('Username and Password must be at least 8 characters long');
     }
   };
 
@@ -30,6 +31,7 @@ export const Register = () => {
           JOIN BnB HOMES
         </h1>
         <form className="flex flex-col gap-6 items-center justify-center rounded-md p-8 bg-slate-200/80 w-[50%]">
+          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
           <div className="">
             <Input
               isClearable
