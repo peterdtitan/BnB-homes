@@ -9,6 +9,8 @@ export const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const [error, setError] = useState('');
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -20,7 +22,10 @@ export const Login = () => {
       dispatch(setUser(storedUser));
       navigate('/');
     } else {
-      <p>Invalid Username or Password</p>;
+      setError('Invalid Login Details!');
+      setTimeout(() => {
+        setError('');
+      }, 2000);
     }
   };
 
@@ -49,6 +54,9 @@ export const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          {error && (
+            <p className="bg-red-300 w-full rounded-md text-red-800 text-xs md:text-md p-1">{error}</p>
+          )}
           <button type="button" onClick={login} className="px-6 py-1 rounded-md bg-green-600 hover:bg-green-900 text-white">Login</button>
         </form>
       </div>
