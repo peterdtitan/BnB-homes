@@ -25,11 +25,14 @@ export const Login = () => {
 
   const login = async (e) => {
     e.preventDefault();
-
+  
     try {
       const response = await dispatch(fetchUser());
-      const foundUser = response.find((u) => u.name === username && u.password === password);
-
+      console.log('Fetched user response:', response.payload);
+  
+      const foundUser = response.payload.find((u) => u.name === username && u.password === password);
+      console.log('Found user:', foundUser);
+  
       if (foundUser) {
         localStorage.setItem('user', JSON.stringify(foundUser));
         dispatch(setUser(foundUser));
@@ -41,12 +44,13 @@ export const Login = () => {
         }, 2500);
       }
     } catch (error) {
+      console.error('Login error:', error);
       setError('An error occurred during login.');
       setTimeout(() => {
         setError('');
       }, 2500);
     }
-  };
+  };  
 
   return (
     <div className="h-screen bg-cover bg-center" style={{ backgroundImage: `url(${backgroundImage})` }}>
