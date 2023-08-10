@@ -188,7 +188,7 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
 
       response '204', 'Reservation deleted' do
         let(:id) do
-          Reservation.create(city_id: 1, home_id: 1, start_date: DateTime.now,
+          Reservation.create(city_id: 1, home_id: 1, user_id: 1, start_date: DateTime.now,
                              end_date: DateTime.now + 1.day).id
         end
 
