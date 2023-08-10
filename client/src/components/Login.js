@@ -29,11 +29,10 @@ export const Login = () => {
     try {
       const response = await dispatch(fetchUser());
       const foundUser = response.find((u) => u.name === username && u.password === password);
-      console.log(foundUser);
 
       if (foundUser) {
-        dispatch(setUser(foundUser));
-        localStorage.setItem('user', JSON.stringify(foundUser));
+        localStorage.setItem('user', JSON.stringify(userObject))
+        dispatch(setUser(userObject));
         navigate('/');
       } else {
         setError('Invalid Login Details!');
