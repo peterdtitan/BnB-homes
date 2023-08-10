@@ -11,7 +11,7 @@ RSpec.describe Api::V1::UsersController, type: :request do
                  properties: {
                    id: { type: :integer },
                    name: { type: :string },
-                   password: { type: :string },
+                   password: { type: :string }
                  },
                  required: %w[id name password]
                }

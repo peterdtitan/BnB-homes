@@ -41,7 +41,7 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
           # Assert the response body against the defined schema
           reservations = JSON.parse(response.body)
           expect(reservations.length).to eq(1)
-          expect(reservations[0]).to include('id', 'city_id', 'home_id', 'user_id' 'start_date', 'end_date')
+          expect(reservations[0]).to include('id', 'city_id', 'home_id', 'user_id', 'start_date', 'end_date')
         end
       end
     end
@@ -94,7 +94,7 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
 
           # Assert the response body against the defined schema
           created_reservation = JSON.parse(response.body)
-          expect(created_reservation).to include('id', 'city_id', 'home_id', 'user_id' 'start_date', 'end_date')
+          expect(created_reservation).to include('id', 'city_id', 'home_id', 'user_id', 'start_date', 'end_date')
         end
       end
 
@@ -134,7 +134,7 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
                  id: { type: :integer },
                  city_id: { type: :integer },
                  home_id: { type: :integer },
-                 user_id: {type: :integer},
+                 user_id: { type: :integer },
                  start_date: { type: :string, format: 'date-time' },
                  end_date: { type: :string, format: 'date-time' }
                },
