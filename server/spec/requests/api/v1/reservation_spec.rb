@@ -41,7 +41,7 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
           # Assert the response body against the defined schema
           reservations = JSON.parse(response.body)
           expect(reservations.length).to eq(1)
-          expect(reservations[0]).to include('id', 'city_id', 'home_id', 'start_date', 'end_date')
+          expect(reservations[0]).to include('id', 'city_id', 'home_id','user_id' 'start_date', 'end_date')
         end
       end
     end
