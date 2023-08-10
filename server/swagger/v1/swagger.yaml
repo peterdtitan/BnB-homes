@@ -4,95 +4,6 @@ info:
   title: API V1
   version: v1
 paths:
-  "/users/login":
-    post:
-      summary: User Sign In
-      tags:
-      - Users
-      parameters: []
-      responses:
-        '200':
-          description: Logged in successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: object
-                    properties:
-                      code:
-                        type: integer
-                      message:
-                        type: string
-                    required:
-                    - code
-                    - message
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      name:
-                        type: string
-                      password:
-                        type: string
-                    required:
-                    - id
-                    - name
-                    - password
-                required:
-                - status
-                - data
-        '401':
-          description: Couldn't find an active session
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                  message:
-                    type: string
-                required:
-                - status
-                - message
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                password:
-                  type: string
-              required:
-              - name
-              - password
-  "/users/logout":
-    delete:
-      summary: User Sign Out
-      tags:
-      - Users
-      security:
-      - bearer_auth: []
-      responses:
-        '200':
-          description: Logged out successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                  message:
-                    type: string
-                required:
-                - status
-                - message
   "/api/v1/city":
     get:
       summary: Retrieve all cities
@@ -516,6 +427,27 @@ paths:
                   - id
                   - name
                   - password
+    post:
+      summary: Create a user
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '201':
+          description: User created
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                password:
+                  type: string
+              required:
+              - name
+              - password
 servers:
 - url: http://{defaultHost}
   variables:
