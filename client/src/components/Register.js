@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import backgroundImage from '../img/register-splash.jpg';
 import { setUser } from '../redux/user/userSlice';
+import { nanoid } from 'nanoid'
 
 export const Register = () => {
   const [username, setUsername] = useState('');
@@ -23,9 +24,10 @@ export const Register = () => {
 
   const register = async (e) => {
     e.preventDefault();
+    const user_id = nanoid();
     if (username.length >= 8 && password.length >= 8) {
       dispatch(setUser({ username, password }));
-      localStorage.setItem('user', JSON.stringify({ username, password }));
+      localStorage.setItem('user', JSON.stringify({ username, password, user_id }));
       navigate('/');
     } else {
       setErrorMessage('Username and Password must be at least 8 characters long');
