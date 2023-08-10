@@ -39,9 +39,7 @@ export const Reserve = () => {
         user_id: user.id,
       };
       await dispatch(addReservations(reservation));
-      console.log(reservation);
-      console.log(user);
-      //navigate('/Reservations');
+      navigate('/Reservations');
     } catch (error) {
       throw new Error(error);
     }
