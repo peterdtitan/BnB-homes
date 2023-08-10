@@ -55,7 +55,7 @@ export const Login = () => {
             />
           </div>
           {error && (
-            <p className="bg-red-300 w-full rounded-md text-red-800 text-xs md:text-md p-1">{error}</p>
+            <p className="bg-red-300 rounded-md text-red-800 text-xs md:text-md p-2">{error}</p>
           )}
           <button type="button" onClick={login} className="px-6 py-1 rounded-md bg-green-600 hover:bg-green-900 text-white">Login</button>
         </form>

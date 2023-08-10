@@ -55,7 +55,7 @@ export const Register = () => {
             />
           </div>
           {errorMessage && (
-            <p className="bg-red-300 w-full rounded-md text-red-800 text-xs md:text-md p-1">{errorMessage}</p>
+            <p className="bg-red-300 rounded-md text-red-800 text-xs md:text-md p-2">{errorMessage}</p>
           )}
           <button type="button" onClick={(e) => register(e)} className="px-6 py-1 rounded-md bg-green-600 hover:bg-green-900 text-white">Register</button>
         </form>

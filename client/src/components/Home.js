@@ -131,7 +131,7 @@ export const Home = () => {
                       </Col>
                       <Col>
                         <Row justify="flex-end">
-                          <Button flat auto rounded color="primary">
+                          <Button flat auto rounded color="primary" onClick={() => handleCardClick(home.id)}>
                             <Text
                               css={{ color: 'inherit' }}
                               size={12}
