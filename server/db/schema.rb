@@ -48,4 +48,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_10_045539) do
 
   add_foreign_key "reservations", "cities"
   add_foreign_key "reservations", "homes"
+  add_foreign_key "reservations", "users"
 end
