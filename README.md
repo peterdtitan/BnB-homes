@@ -79,6 +79,8 @@ In order to run this project you need:
 
 ![kanban](https://user-images.githubusercontent.com/92449229/256266758-11cd96b1-b12c-4d0e-ab5d-d4fba7afd40f.png)
 
+[Kanban](https://github.com/users/peterdtitan/projects/10)
+
 ### Setup
 
 - Clone this repository to your desired folder:
