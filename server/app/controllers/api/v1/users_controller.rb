@@ -13,7 +13,7 @@ class Api::V1::UsersController < ApplicationController
     puts "Received parameters: #{params.inspect}"
     @user = User.new(user_params)
     if @user.save
-      render json: @user, status: 201
+      render json: @user, status: :created
     else
       render json: {
         error: 'Error creating user ...'
