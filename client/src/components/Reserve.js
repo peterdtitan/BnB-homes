@@ -17,6 +17,7 @@ export const Reserve = () => {
   const cityData = useSelector((state) => state.city.data);
   const user = useSelector((state) => state.user)
 
+
   const handleCityChange = (e) => {
     setSelectedCity(e.target.value);
   };
@@ -29,17 +30,17 @@ export const Reserve = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const reservation = {
-
-      start_date: startDate,
-      end_date: endDate,
-      user_id: user.user_id,
-      city_id: selectedCity,
-      home_id: homeId,
-    };
     try {
+      const reservation = {
+        start_date: startDate,
+        end_date: endDate,
+        city_id: selectedCity,
+        home_id: homeId,
+        user_id: user.id,
+      };
       await dispatch(addReservations(reservation));
-      navigate('/Reservations');
+      console.log(reservation);
+      //navigate('/Reservations');
     } catch (error) {
       throw new Error(error);
     }
