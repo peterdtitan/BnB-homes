@@ -65,7 +65,6 @@ RSpec.describe Api::V1::UsersController, type: :request do
           # Assert the response body against the expected user attributes
           user = JSON.parse(response.body)
           expect(user).to include('id', 'name')
-          
         end
       end
     end
