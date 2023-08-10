@@ -8,6 +8,7 @@ class UpdateReservationsTable < ActiveRecord::Migration[7.0]
 
     add_column :reservations, :city_id, :bigint, null: false
     add_column :reservations, :home_id, :bigint, null: false
+    add_column :reservations, :user_id, :bigint, null: false
 
     add_foreign_key :reservations, :cities, column: :city_id
     add_foreign_key :reservations, :homes, column: :home_id

@@ -19,7 +19,7 @@ Rails.application.routes.draw do
       resources :city, only: %i[index create]
       resources :homes, only: %i[index show create destroy]
       resources :reservations, only: %i[index show create destroy]
-      resources :users, only: [:index]
+      resources :users, only: [:index, :show, :create]
     end
   end
 end
