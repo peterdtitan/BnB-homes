@@ -53,7 +53,6 @@ export const Register = () => {
         <form className="flex flex-col gap-6 items-center justify-center rounded-md p-8 bg-slate-200/80 w-[50%]">
           <div className="">
             <Input
-              isClearable
               type="text"
               label="Username"
               variant="bordered"
@@ -63,7 +62,6 @@ export const Register = () => {
           </div>
           <div>
             <Input
-              isClearable
               type="password"
               label="Password"
               variant="bordered"
