@@ -3,7 +3,8 @@ import { Input } from '@nextui-org/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import backgroundImage from '../img/login-splash.jpg';
-import { setUser } from '../redux/user/userSlice';
+import { setUser, fetchUser } from '../redux/user/userSlice';
+
 
 export const Login = () => {
   const [username, setUsername] = useState('');
@@ -22,15 +23,26 @@ export const Login = () => {
     }
   }, [user]);
 
-  const login = (e) => {
+  const login = async (e) => {
     e.preventDefault();
-    const storedUser = JSON.parse(localStorage.getItem('user'));
 
-    if (storedUser && storedUser.username === username && storedUser.password === password) {
-      dispatch(setUser(storedUser));
-      navigate('/');
-    } else {
-      setError('Invalid Login Details!');
+    try {
+      const response = await dispatch(fetchUser());
+      const foundUser = response.find((u) => u.name === username && u.password === password);
+      console.log(foundUser);
+
+      if (foundUser) {
+        dispatch(setUser(foundUser));
+        localStorage.setItem('user', JSON.stringify(foundUser));
+        navigate('/');
+      } else {
+        setError('Invalid Login Details!');
+        setTimeout(() => {
+          setError('');
+        }, 2500);
+      }
+    } catch (error) {
+      setError('An error occurred during login.');
       setTimeout(() => {
         setError('');
       }, 2500);
