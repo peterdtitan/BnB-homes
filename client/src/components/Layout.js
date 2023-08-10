@@ -4,6 +4,7 @@ import { HiHomeModern } from 'react-icons/hi2';
 import { HiDocumentRemove } from 'react-icons/hi';
 import { RiReservedFill, RiFileList3Fill } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import { clearUser } from '../redux/user/userSlice';
 import './Layout.css';
@@ -11,10 +12,12 @@ import './Layout.css';
 export const Layout = ({ children }) => {
   const dispatch = useDispatch();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(clearUser());
-    window.location.reload();
+    localStorage.removeItem('user');
+    navigate('/Splash');
   };
 
   const toggleSidebar = () => {
@@ -106,9 +109,6 @@ export const Layout = ({ children }) => {
                 </span>
               </Link>
             </li>
-
-            {/* Removed the '/Reserve path' not sure of the use case. */}
-
             <li>
               <Link
                 to="/AddHome"
