@@ -15,6 +15,7 @@ export const Reserve = () => {
   const homes = useSelector((state) => state.homes.homes);
   const selectedHome = homes.find((home) => home.id === parseInt(homeId, 10));
   const cityData = useSelector((state) => state.city.data);
+  const user = useSelector((state) => state.user)
 
   const handleCityChange = (e) => {
     setSelectedCity(e.target.value);
@@ -32,6 +33,7 @@ export const Reserve = () => {
 
       start_date: startDate,
       end_date: endDate,
+      user_id: user.user_id,
       city_id: selectedCity,
       home_id: homeId,
     };

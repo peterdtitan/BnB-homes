@@ -14,7 +14,6 @@ export const Layout = ({ children }) => {
 
   const handleLogout = () => {
     dispatch(clearUser());
-    setIsSidebarOpen(false);
     window.location.reload();
   };
 
