@@ -15,7 +15,7 @@ export const Reserve = () => {
   const homes = useSelector((state) => state.homes.homes);
   const selectedHome = homes.find((home) => home.id === parseInt(homeId, 10));
   const cityData = useSelector((state) => state.city.data);
-  const user = useSelector((state) => state.user)
+  const user = useSelector((state) => state.user.user)
 
 
   const handleCityChange = (e) => {
@@ -40,6 +40,7 @@ export const Reserve = () => {
       };
       await dispatch(addReservations(reservation));
       console.log(reservation);
+      console.log(user);
       //navigate('/Reservations');
     } catch (error) {
       throw new Error(error);
