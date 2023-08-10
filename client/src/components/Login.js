@@ -31,8 +31,8 @@ export const Login = () => {
       const foundUser = response.find((u) => u.name === username && u.password === password);
 
       if (foundUser) {
-        localStorage.setItem('user', JSON.stringify(userObject))
-        dispatch(setUser(userObject));
+        localStorage.setItem('user', JSON.stringify(foundUser));
+        dispatch(setUser(foundUser));
         navigate('/');
       } else {
         setError('Invalid Login Details!');
