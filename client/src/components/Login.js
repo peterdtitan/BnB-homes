@@ -25,7 +25,7 @@ export const Login = () => {
       setError('Invalid Login Details!');
       setTimeout(() => {
         setError('');
-      }, 2000);
+      }, 2500);
     }
   };
 

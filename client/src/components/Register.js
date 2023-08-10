@@ -21,6 +21,9 @@ export const Register = () => {
       navigate('/');
     } else {
       setErrorMessage('Username and Password must be at least 8 characters long');
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 2500);
     }
   };
 
@@ -31,7 +34,6 @@ export const Register = () => {
           JOIN BnB HOMES
         </h1>
         <form className="flex flex-col gap-6 items-center justify-center rounded-md p-8 bg-slate-200/80 w-[50%]">
-          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
           <div className="">
             <Input
               isClearable
@@ -52,6 +54,9 @@ export const Register = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          {errorMessage && (
+            <p className="bg-red-300 w-full rounded-md text-red-800 text-xs md:text-md p-1">{errorMessage}</p>
+          )}
           <button type="button" onClick={(e) => register(e)} className="px-6 py-1 rounded-md bg-green-600 hover:bg-green-900 text-white">Register</button>
         </form>
       </div>
