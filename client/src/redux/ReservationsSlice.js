@@ -36,9 +36,9 @@ export const addReservations = createAsyncThunk(
 );
 
 export const deleteReservations = createAsyncThunk(
-  'homes/deleteReservations',
+  'reservations/deleteReservations',
   async (reservationsId) => {
-    await axios.delete(`/api/v1/homes/${reservationsId}`);
+    await axios.delete(`/api/v1/reservations/${reservationsId}`);
     return reservationsId;
   },
 );
