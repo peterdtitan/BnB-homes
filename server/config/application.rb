@@ -8,13 +8,12 @@ Bundler.require(*Rails.groups)
 
 module Backend
   class Application < Rails::Application
-    # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins '*' # Allow requests from any origin, including Postman
-        resource '*', headers: :any, methods: %i[get post put patch delete options head]
+        origins '*'
+        resource '*', headers: :any, methods: [:get, :post, :put, :patch, :delete, :options]
       end
     end
   end
