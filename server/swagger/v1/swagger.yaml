@@ -31,8 +31,8 @@ paths:
       - City
       parameters: []
       responses:
-        '200':
-          description: Error creating location
+        '201':
+          description: City created
           content:
             application/json:
               schema:
@@ -42,6 +42,16 @@ paths:
                     type: integer
                   name:
                     type: string
+                required:
+                - id
+                - name
+        '422':
+          description: Error creating location
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
                   error:
                     type: string
                 required:
@@ -92,8 +102,8 @@ paths:
       - Homes
       parameters: []
       responses:
-        '200':
-          description: Error creating home
+        '201':
+          description: Home created
           content:
             application/json:
               schema:
@@ -109,6 +119,19 @@ paths:
                     type: string
                   description:
                     type: string
+                required:
+                - id
+                - name
+                - price
+                - image
+                - description
+        '422':
+          description: Error creating home
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
                   error:
                     type: string
                 required:
@@ -182,14 +205,14 @@ paths:
                 required:
                 - error
     delete:
-      summary: Delete a service
+      summary: Delete a home
       tags:
       - Homes
       responses:
         '204':
           description: Homes deleted
         '404':
-          description: Service not found
+          description: Home not found
           content:
             application/json:
               schema:
@@ -219,6 +242,8 @@ paths:
                       type: integer
                     home_id:
                       type: integer
+                    user_id:
+                      type: integer
                     start_date:
                       type: string
                       format: date-time
@@ -229,6 +254,7 @@ paths:
                   - id
                   - city_id
                   - home_id
+                  - user_id
                   - start_date
                   - end_date
     post:
@@ -237,8 +263,8 @@ paths:
       - Reservations
       parameters: []
       responses:
-        '200':
-          description: Error creating reservation
+        '201':
+          description: Reservation created
           content:
             application/json:
               schema:
@@ -250,12 +276,28 @@ paths:
                     type: integer
                   home_id:
                     type: integer
+                  user_id:
+                    type: integer
                   start_date:
                     type: string
                     format: date-time
                   end_date:
                     type: string
                     format: date-time
+                required:
+                - id
+                - city_id
+                - home_id
+                - user_id
+                - start_date
+                - end_date
+        '422':
+          description: Error creating reservation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
                   error:
                     type: string
                 required:
@@ -272,6 +314,8 @@ paths:
                   type: integer
                 home_id:
                   type: integer
+                user_id:
+                  type: integer
                 start_date:
                   type: string
                   format: date-time
@@ -282,6 +326,7 @@ paths:
               - id
               - city_id
               - home_id
+              - user_id
               - start_date
               - end_date
   "/api/v1/reservations/{id}":
@@ -308,6 +353,8 @@ paths:
                   city_id:
                     type: integer
                   home_id:
+                    type: integer
+                  user_id:
                     type: integer
                   start_date:
                     type: string
@@ -372,14 +419,14 @@ paths:
                   properties:
                     id:
                       type: integer
-                    username:
+                    name:
                       type: string
-                    email:
+                    password:
                       type: string
                   required:
                   - id
-                  - username
-                  - email
+                  - name
+                  - password
 servers:
 - url: http://{defaultHost}
   variables:
