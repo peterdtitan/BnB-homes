@@ -1,10 +1,8 @@
 module.exports = {
-  preset: 'ts-jest',
-  testEnvironment: 'node',
+  // preset: 'ts-jest',
+  testEnvironment: "node",
   transform: {
-    '^.+\\.(js|jsx)$': 'babel-jest',
+    "^.+\\.(js|jsx)$": "babel-jest",
   },
-  transformIgnorePatterns: [
-    '/node_modules/(?!(axios)/)',
-  ],
+  transformIgnorePatterns: ["/node_modules/(?!(axios)/)"],
 };
