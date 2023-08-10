@@ -12,10 +12,11 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
                    id: { type: :integer },
                    city_id: { type: :integer },
                    home_id: { type: :integer },
+                   user_id: {type: :integer},
                    start_date: { type: :string, format: 'date-time' },
                    end_date: { type: :string, format: 'date-time' }
                  },
-                 required: %w[id city_id home_id start_date end_date]
+                 required: %w[id city_id home_id user_id start_date end_date]
                }
 
         run_test! do
@@ -26,6 +27,7 @@ RSpec.describe Api::V1::ReservationsController, type: :request do
           Reservation.create!(
             city_id: city.id,
             home_id: home.id,
+            user_id: user.id,
             start_date: DateTime.now,
             end_date: DateTime.now + 1.day
           )
