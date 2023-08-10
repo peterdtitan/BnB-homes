@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input } from '@nextui-org/react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import backgroundImage from '../img/register-splash.jpg';
 import { setUser } from '../redux/user/userSlice';
@@ -12,6 +12,14 @@ export const Register = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user]);
 
   const register = async (e) => {
     e.preventDefault();
