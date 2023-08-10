@@ -23,8 +23,7 @@ end
 # Seed data for Users
 5.times do |n|
   User.create(
-    username: "user#{n + 1}",
-    email: "user#{n + 1}@example.com",
+    name: "username#{n + 1}",
     password: 'password'
   )
 end
@@ -32,13 +31,14 @@ end
 # Seed data for Reservations
 cities = City.all
 homes = Home.all
-User.all
+users = User.all
 
 5.times do |n|
   Reservation.create(
     start_date: Date.today + n.days,
     end_date: Date.today + (n + 7).days,
     city_id: cities.sample.id,
-    home_id: homes.sample.id
+    home_id: homes.sample.id,
+    user_id: users.sample.id
   )
 end
