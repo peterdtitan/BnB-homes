@@ -8,7 +8,11 @@ import {
 export const Reservations = () => {
   const dispatch = useDispatch();
   const reservations = useSelector((state) => state.reservations.reservations);
-  const homes = useSelector((state) => state.homes.homes); // Assuming you have a homes reducer
+  const homes = useSelector((state) => state.homes.homes);
+  const user = useSelector((state) => state.user.user);
+  const userReservations = reservations.filter(
+    (reservation) => reservation.user_id === user.id
+  )
 
   useEffect(() => {
     dispatch(fetchAllReservations());
@@ -27,7 +31,7 @@ export const Reservations = () => {
     <div className="flex flex-col items-center">
       <h1 className="text-2xl font-bold mb-4">Reservations</h1>
       <div className="grid grid-cols-1 gap-4 md:flex md:flex-col">
-        {reservations.map((reservation) => (
+        {userReservations.map((reservation) => (
           <div
             key={reservation.id}
             className="w-full md:w-[550px] p-6 bg-white rounded-md shadow-md flex flex-col justify-between gap-4 md:flex-row md:items-center"
