@@ -16,11 +16,11 @@ export const Login = () => {
 
   const user = useSelector((state) => state.user);
 
-  useEffect(() => {
-    if (user) {
-      navigate('/');
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     navigate('/');
+  //   }
+  // }, [user]);
 
   const login = (e) => {
     e.preventDefault();

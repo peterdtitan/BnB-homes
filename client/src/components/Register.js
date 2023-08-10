@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import backgroundImage from '../img/register-splash.jpg';
 import { setUser } from '../redux/user/userSlice';
+import { postUser } from '../redux/user/userSlice';
 
 export const Register = () => {
   const [username, setUsername] = useState('');
@@ -15,19 +16,25 @@ export const Register = () => {
 
   const user = useSelector((state) => state.user);
 
-  useEffect(() => {
-    if (user) {
-      navigate('/');
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     navigate('/');
+  //   }
+  // }, [user]);
 
   const register = async (e) => {
     e.preventDefault();
-    const user_id = Math.floor(100000 + Math.random() * 900000);
+
     if (username.length >= 8 && password.length >= 8) {
-      dispatch(setUser({ username, password }));
-      localStorage.setItem('user', JSON.stringify({ username, password, user_id }));
-      navigate('/');
+      try {
+        const userData = { name: username, password: password }; 
+        const response = await dispatch(postUser(userData));
+        const newUser = response.payload;
+        localStorage.setItem('user', JSON.stringify(newUser)); 
+        navigate('/');
+      } catch (error) {
+        setErrorMessage('Error registering user');
+      }
     } else {
       setErrorMessage('Username and Password must be at least 8 characters long');
       setTimeout(() => {
@@ -35,6 +42,7 @@ export const Register = () => {
       }, 2500);
     }
   };
+
 
   return (
     <div className="h-screen bg-cover bg-center" style={{ backgroundImage: `url(${backgroundImage})` }}>
