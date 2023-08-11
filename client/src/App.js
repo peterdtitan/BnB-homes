@@ -36,11 +36,6 @@ const App = () => {
 
   return (
     <div className="content">
-      <Routes>
-        <Route path="/Login" element={<Login />} />
-        <Route path="/Register" element={<Register />} />
-      </Routes>
-
       {user ? (
         <Layout>
           <Routes>
@@ -56,6 +51,8 @@ const App = () => {
       ) : (
         <Routes>
           <Route path="/Splash" element={<Splash />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/Register" element={<Register />} />
         </Routes>
       )}
     </div>
