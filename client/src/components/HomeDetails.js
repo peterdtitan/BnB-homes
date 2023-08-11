@@ -27,7 +27,7 @@ export const HomeDetails = () => {
       <div className="flex flex-col gap-y-2 md:mt-0 mt-10">
         <h1 className="p-2 rounded-md bg-slate-400 font-medium">{selectedHome.name.toUpperCase()}</h1>
         <p className="max-w-sm p-2 rounded-md bg-slate-200">
-          {homes[0].description}
+          {selectedHome.description}
         </p>
         <div className="flex flex-col mt-2">
           <h2 className="flex justify-center mt-4 p-1 bg-emerald-200 rounded-md">AMENITIES AVAILABLE</h2>
